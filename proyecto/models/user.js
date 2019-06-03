@@ -18,11 +18,11 @@ async function execute(){
     console.log(`Hubo un error ${ex}`)
   }
   
- /* finally
+  finally
   {
-    await client.end()
+    //await client.end()
     console.log("Cliente desconectado.")
-  }*/
+  }
 }
 
 // client.query(select * from tabla where atributo="algo")

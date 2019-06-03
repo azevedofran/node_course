@@ -17,16 +17,28 @@ app.get("/login",function (req,res) {
   res.render("login")
 });
 
+app.get("/registrar",function (req,res) {
+  res.render("registrar")
+});
+
 app.post("/users", function(req,res,ret){
   
   if (req.body.password == req.body.password_confirmation){
-    client.query("insert into USUARIOS values ($1, $2)", [req.body.email,req.body.password]);
+    client.query("insert into USUARIOS values ($1, $2)", [req.body.usuario,req.body.password]);
     console.log("Password: "+ req.body.password);
-    console.log("Email: "+ req.body.email);
+    console.log("Usuario: "+ req.body.usuario);
     res.send("Recibimos tus datos");
   }else{
     res.send("El password indicado no esta bien");
   }
+});
+// client.query(select * from tabla where atributo="algo")
+app.post("/usersLogin", function(req,res,ret){
+  console.log("Usuario: "+ req.body.usuario);
+  console.log("Password: "+ req.body.password);
+  var result = client.query("select * from usuarios");
+  console.log(result);
+  res.send("Recibimos tus datos de Inicio");
 })
 
 app.listen(8080);
