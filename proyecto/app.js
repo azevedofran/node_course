@@ -34,11 +34,11 @@ app.post("/users", function(req,res,ret){
 });
 // client.query(select * from tabla where atributo="algo")
 app.post("/usersLogin", function(req,res,ret){
-  console.log("Usuario: "+ req.body.usuario);
-  console.log("Password: "+ req.body.password);
-  var result = client.query("select * from usuarios");
-  console.log(result);
-  res.send("Recibimos tus datos de Inicio");
+  client.query("select usu_contrasena from usuarios where usu_id ='"+
+    req.body.usuario+"'").then(rows=>{
+      console.log(rows);
+      res.send("Resultado del query: "+rows);
+  });
 })
 
 app.listen(8080);

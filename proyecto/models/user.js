@@ -21,7 +21,7 @@ async function execute(){
   finally
   {
     //await client.end()
-    console.log("Cliente desconectado.")
+    //console.log("Cliente desconectado.")
   }
 }
 
