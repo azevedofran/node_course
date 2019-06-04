@@ -36,8 +36,16 @@ app.post("/users", function(req,res,ret){
 app.post("/usersLogin", function(req,res,ret){
   client.query("select usu_contrasena from usuarios where usu_id ='"+
     req.body.usuario+"'").then(rows=>{
-      console.log(rows);
-      res.send("Resultado del query: "+rows);
+      console.log(rows/*.match(/(?<=\[])(.+)(?=\])/g)*/);
+      
+      var consulta = rows/*.match(/(?<=\[])(.+)(?=\])/g)*/;
+      console.log("=========================");
+      console.log(consulta);
+      if (consulta == req.body.password){
+        res.send("Usuario Validado");
+      }else{
+        res.send("Usuario o Contrasena invalido");
+      }
   });
 })
 
