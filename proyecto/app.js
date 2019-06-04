@@ -22,31 +22,31 @@ app.get("/registrar",function (req,res) {
 });
 
 app.post("/users", function(req,res,ret){
-  
-  if (req.body.password == req.body.password_confirmation){
-    client.query("insert into USUARIOS values ($1, $2)", [req.body.usuario,req.body.password]);
-    console.log("Password: "+ req.body.password);
-    console.log("Usuario: "+ req.body.usuario);
-    res.send("Recibimos tus datos");
-  }else{
-    res.send("El password indicado no esta bien");
-  }
-});
+  client.query("select usu_id from usuarios where usu_id='"+req.body.usuario+"'").then(rows=>{
+    console.log(rows.rowCount);
+    if (req.body.password == req.body.password_confirmation && rows.rowCount<=0 ){
+      client.query("insert into USUARIOS values ($1, $2)", [req.body.usuario,req.body.password]);
+      console.log("Password: "+ req.body.password);
+      console.log("Usuario: "+ req.body.usuario);
+      res.send("Recibimos tus datos");
+    }else if (req.body.password != req.body.password_confirmation){
+      res.send("El password indicado no esta bien");
+    }else if (rows.rowCount>0){
+      res.send("El usuario ya existe");
+    }
+  })
+})
 // client.query(select * from tabla where atributo="algo")
 app.post("/usersLogin", function(req,res,ret){
   client.query("select usu_contrasena from usuarios where usu_id ='"+
-    req.body.usuario+"'").then(rows=>{
-      console.log(rows/*.match(/(?<=\[])(.+)(?=\])/g)*/);
-      
-      var consulta = rows/*.match(/(?<=\[])(.+)(?=\])/g)*/;
-      console.log("=========================");
-      console.log(consulta);
+  req.body.usuario+"'").then(rows=>{
+      var consulta = rows.rows[0].usu_contrasena;
       if (consulta == req.body.password){
         res.send("Usuario Validado");
       }else{
         res.send("Usuario o Contrasena invalido");
       }
-  });
+  })
 })
 
 app.listen(8080);
