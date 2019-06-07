@@ -156,7 +156,7 @@ Create table INFORMACION_PERSONA
 Create table CARGO
 (
   car_id serial NOT NULL,
-  car_cargo varchar(10) NOT NULL,
+  car_cargo varchar(35) NOT NULL,
   CONSTRAINT car_id_pk PRIMARY KEY (car_id)
 );
 -------------------------------------------------------------------------------
