@@ -21,6 +21,10 @@ app.get("/registrar",function (req,res) {
   res.render("registrar")
 });
 
+app.get("/persona",function (req,res){
+  res.render("persona")
+});
+
 app.post("/users", function(req,res,ret){
   client.query("select usu_id from usuarios where usu_id='"+req.body.usuario+"'").then(rows=>{
     console.log(rows.rowCount);
@@ -47,6 +51,10 @@ app.post("/usersLogin", function(req,res,ret){
         res.send("Usuario o Contrasena invalido");
       }
   })
+})
+
+app.post("/persona", function(req,res,ret){
+
 })
 
 app.listen(8080);
