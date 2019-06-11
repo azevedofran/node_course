@@ -7,6 +7,8 @@ var client = require("./models/user").client;
 app.use("/public", express.static('public'));
 app.use(bodyParser.json()); // para peticiones application/json
 app.use(bodyParser.urlencoded({extended: true}));
+
+
 app.set("view engine", "jade");
 
 app.get("/",function (req,res) {
@@ -23,6 +25,10 @@ app.get("/registrar",function (req,res) {
 
 app.get("/persona",function (req,res){
   res.render("persona")
+});
+
+app.get("/capacitacion",function (req,res) {
+  res.render("capacitacion")
 });
 
 app.post("/users", function(req,res,ret){
@@ -54,7 +60,32 @@ app.post("/usersLogin", function(req,res,ret){
 })
 
 app.post("/persona", function(req,res,ret){
-
+  client.query("select per_cedula from persona where per_cedula='"+
+  req.body.per_cedula+"'").then(rows=>{
+    if (rows.rowCount <=0){
+      if (req.body.per_nombre2==''){
+        var nombre2=null;
+      }
+      if (req.body.per_apellido2==''){
+        var apellido2=null;
+      }
+      client.query("insert into PERSONA values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [req.body.per_cedula,req.body.per_nombre,nombre2,req.body.per_apellido,apellido2,req.body.per_fecha_nacimiento,req.body.per_edo_civil,req.body.per_correo,req.body.per_genero,req.body.per_profesion]); 
+      res.send("Persona Fue Agregada");
+    } else{
+      res.send("Persona Ya Existe");
+    }
+  })
 })
-
+app.post("/capacitacion", function(req,res,ret){
+ client.query("select per_cedula from PERSONA where per_cedula ='"+
+  req.body.cap_persona+"'").then(rows=>{
+    if(rows.rowCount >0){
+      client.query("insert into CAPACITACION values ($1, $2, $3, $4, $5, $6)", [req.body.cap_persona,req.body.cap_institucion,req.body.cap_curso,req.body.cap_descripcion,req.body.cap_fecha,req.body.cap_horas]); 
+      res.send("capacitacion Fue Agregada");
+    }else{
+      res.send("La persona no existe");
+    }
+   
+  })
+})
 app.listen(8080);

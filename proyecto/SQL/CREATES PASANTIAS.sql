@@ -12,15 +12,15 @@ Create table PROFESION
 Create table PERSONA
 (
   per_cedula integer NOT NULL,
+  per_ven varchar(2) NOT NUll,
   per_nombre varchar(10) NOT NULL,
-  per_ven varchar(1) NOT NUll,
   per_nombre2 varchar(10),
   per_apellido varchar(10) NOT NULL,
   per_apellido2 varchar(10),
   per_fecha_nacimiento date NOT NULL,
   per_edo_civil varchar(2) NOT NULL,
   per_correo varchar(30) NOT NULL,
-  per_genero varchar(1) NOT NULL,
+  per_genero varchar(2) NOT NULL,
   per_profesion varchar(10) NOT NULL,
   CONSTRAINT check_per_genero CHECK (per_genero='F' or per_genero='M'),
   CONSTRAINT check_per_edo_civil CHECK (per_edo_civil='S' or per_edo_civil='C' or per_edo_civil='D' or per_edo_civil='V' or per_edo_civil='CB'),
@@ -91,7 +91,7 @@ Create table DIRECCION
   dir_ciudad integer NOT NULL,
   dir_persona integer NOT NULL,
   CONSTRAINT dir_id_pk PRIMARY KEY (dir_id),
-  CONSTRAINT fk_dir_estado FOREIGN KEY (dir_ciudad) REFERENCES ESTADO(est_id),
+  CONSTRAINT fk_dir_estado FOREIGN KEY (dir_ciudad) REFERENCES CIUDAD(ciu_id),
   CONSTRAINT fk_dir_persona FOREIGN KEY (dir_persona) REFERENCES PERSONA(per_cedula)
 );
 -------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ Create table APRECIACION
   apr_consolidado integer NOT NULL,
   apr_persona integer NOT NULL,
   CONSTRAINT apr_id_pk PRIMARY KEY (apr_id),
-  CONSTRAINT fk_apr_persona FOREIGN KEY (apr_persona) REFERENCES ESTADO(est_id)
+  CONSTRAINT fk_apr_persona FOREIGN KEY (apr_persona) REFERENCES PERSONA(per_cedula)
 );
 -------------------------------------------------------------------------------
 
@@ -132,7 +132,7 @@ Create table APRECIACION
 Create table INFORMACION
 (
   inf_id serial NOT NULL,
-  inf_tipo varchar(10) NOT NULL,
+  inf_tipo varchar(20) NOT NULL,
   inf_descripcion varchar(100) NOT NULL,
   CONSTRAINT inf_id_pk PRIMARY KEY (inf_id)
 );
@@ -294,8 +294,7 @@ Create table COMPETENCIA_T
 Create table COMPETENCIA
 (
   com_id varchar(3) NOT NULL,
-  com_competencia varchar(20) NOT NULL,
-  com_descripcion varchar(100) NOT NULL,
+  com_competencia varchar(150) NOT NULL,
   com_tipo varchar(3) NOT NULL,
   CONSTRAINT com_id_pk PRIMARY KEY (com_id),
   CONSTRAINT fk_com_tipo FOREIGN KEY (com_tipo) REFERENCES COMPETENCIA_T(com_t_id)

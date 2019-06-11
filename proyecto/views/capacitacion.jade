@@ -1,0 +1,38 @@
+extends ./layout.jade
+block contenido
+
+          .container
+            form(action="/capacitacion",method="POST")
+              .form-inline
+                  div(class="form-group")
+                  label(for="cap_persona") Cedula
+                  input(type="text", name="cap_persona", placeholder="Cedula",id="cap_persona",class="form-control form-control-lg border-left-0") 
+
+                  div(class="form-group")
+                  label(for="cap_institucion") Instituto
+                  input(type="text", name="cap_institucion", placeholder="Instituto",id="cap_institucion",class="form-control form-control-lg border-left-0")
+
+              
+              .form-inline 
+                div(class="form-group")
+                  label(for="cap_curso") Nombre del Curso
+                  input(type="text", name="cap_curso", placeholder="Curso",id="cap_curso",class="form-control form-control-lg border-left-0")
+              .form-inline 
+                  div(class="form-group")
+                  label(for="cap_descripcion") Descripcion
+                  input(type="text", name="cap_descripcion", placeholder="Descripcion",id="cap_descripcion",class="form-control form-control-lg border-left-0")
+              
+              .form-inline 
+                div(class="form-group")
+                  label(for="cap_fecha") Fecha de Realizacion
+                  input(type="text", name="cap_fecha", placeholder="yyyy-mm-dd",id="cap_fecha",class="form-control form-control-lg border-left-0")
+
+              
+                div(class="form-group")
+                  label(for="cap_horas") Horas
+                  input(type="text", name="cap_horas", placeholder="Horas",id="cap_horas",class="form-control form-control-lg border-left-0")
+
+                
+              
+              div
+                center: input(type="submit" value="Guardar" class="btn btn-info")

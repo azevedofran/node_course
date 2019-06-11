@@ -1,62 +1,57 @@
 extends ./layout.jade
 block contenido
-  form(action="/persona",method="POST")
 
-    div
-      label(for="per_ven") V/E
-      input(type="text", name="per_ven", placeholder="V/E",id="per_ven",class="form-control form-control-lg border-left-0")
+          .container
+            form(action="/persona",method="POST")
+              .form-inline
+                  div(class="form-group")
+                  label(for="per_cedula") Cedula
+                  input(type="text", name="per_cedula", placeholder="Cedula",id="per_cedula",class="form-control form-control-lg border-left-0")
+    
+                div(class="form-group")
+                  label(for="per_nombre") Nombre
+                  input(type="text", name="per_nombre", placeholder="Nombre",id="per_nombre",class="form-control form-control-lg border-left-0")
 
-    div(class="form-group")
-      label(for="per_cedula") Cedula
-      input(type="text", name="per_cedula", placeholder="Cedula",id="per_cedula",class="form-control form-control-lg border-left-0")
+                div(class="form-group")
+                  label(for="per_nombre2") Segundo Nombre
+                  input(type="text", name="per_nombre2", placeholder="Segundo Nombre",id="per_nombre2",class="form-control form-control-lg border-left-0")
+              
+              .form-inline 
+                div(class="form-group")
+                  label(for="per_apellido") Apellido
+                  input(type="text", name="per_apellido", placeholder="Apellido",id="per_apellido",class="form-control form-control-lg border-left-0")
 
-    div
-      label(for="per_nombre") Nombre
-      input(type="text", name="per_nombre", placeholder="Nombre",id="per_nombre",class="form-control form-control-lg border-left-0")
+                div(class="form-group")
+                  label(for="per_apellido2") Segundo Apellido
+                  input(type="text", name="per_apellido2", placeholder="Segundo Apellido",id="per_apellido2",class="form-control form-control-lg border-left-0")
+              .form-inline 
+                div(class="form-group")
+                  label(for="per_fecha_nacimiento") Fecha de Nacimiento
+                  input(type="text", name="per_fecha_nacimiento", placeholder="yyyy-mm-dd",id="per_fecha_nacimiento",class="form-control form-control-lg border-left-0")
+              .form-inline 
+                div(class="form-group")
+                  label(for="per_edo_civil") Estado Civil
+                  input(type="text", name="per_edo_civil", placeholder="Estado Civil",id="per_edo_civil",class="form-control form-control-lg border-left-0")
 
-    div
-      label(for="per_nombre2") Segundo Nombre
-      input(type="text", name="per_nombre2", placeholder="Segundo Nombre",id="per_nombre2",class="form-control form-control-lg border-left-0")
+                div(class="form-group")
+                  label(for="per_correo") Correo Electronico
+                  input(type="text", name="per_correo", placeholder="Correo Electronico",id="per_correo",class="form-control form-control-lg border-left-0")
+              .form-inline 
+                div(class="form-group")
+                  label(for="per_genero") Genero
+                  input(type="text", name="per_genero", placeholder="Genero",id="per_genero",class="form-control form-control-lg border-left-0")
 
-    div
-      label(for="per_apellido") Apellido
-      input(type="text", name="per_apellido", placeholder="Apellido",id="per_apellido",class="form-control form-control-lg border-left-0")
+                div(class="form-group")
+                  label(for="per_profesion") Profesion
+                  input(type="text", name="per_profesion", placeholder="Profesion",id="per_profesion",class="form-control form-control-lg border-left-0")
+              .form-inline 
+                div(class="form-group")
+                  label(for="direccion") Direccion
+                  input(type="text", name="direccion", placeholder="Direccion",id="direccion",class="form-control form-control-lg border-left-0")
 
-    div
-      label(for="per_apellido2") Segundo Apellido
-      input(type="text", name="per_apellido2", placeholder="Segundo Apellido",id="per_apellido2",class="form-control form-control-lg border-left-0")
+                div(class="form-group")
+                  label(for="telefono") Telefono
+                  input(type="telefono", name="telefono", placeholder="Telefono",id="telefono",class="form-control form-control-lg border-left-0")
 
-    div
-      label(for="nacionalidad") Nacionalidad
-      input(type="text", name="nacionalidad", placeholder="Segundo Apellido",id="nacionalidad",class="form-control form-control-lg border-left-0")
-
-    div
-      label(for="per_fecha_nacimiento") Fecha de Nacimiento
-      input(type="date", name="per_fecha_nacimiento", placeholder="Segundo Apellido",id="per_fecha_nacimiento",class="form-control form-control-lg border-left-0")
-
-    div
-      label(for="per_edo_civil") Estado Civil
-      input(type="text", name="per_edo_civil", placeholder="Estado Civil",id="per_edo_civil",class="form-control form-control-lg border-left-0")
-
-    div
-      label(for="per_correo") Correo Electronico
-      input(type="text", name="per_correo", placeholder="Correo Electronico",id="per_correo",class="form-control form-control-lg border-left-0")
-
-    div
-      label(for="per_genero") Genero
-      input(type="text", name="per_genero", placeholder="Genero",id="per_genero",class="form-control form-control-lg border-left-0")
-
-    div
-      label(for="per_profesion") Profesion
-      input(type="text", name="per_profesion", placeholder="Profesion",id="per_profesion",class="form-control form-control-lg border-left-0")
-
-    div
-      label(for="direccion") Direccion
-      input(type="text", name="direccion", placeholder="Direccion",id="direccion",class="form-control form-control-lg border-left-0")
-
-    div
-      label(for="telefono") Telefono
-      input(type="telefono", name="telefono", placeholder="Telefono",id="telefono",class="form-control form-control-lg border-left-0")
-
-    div
-      input(type="submit" value="Guardar" class="btn btn-info")
+              div
+                center: input(type="submit" value="Guardar" class="btn btn-info")

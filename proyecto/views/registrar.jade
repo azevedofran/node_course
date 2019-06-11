@@ -1,14 +1,18 @@
 extends ./layout.jade
 block contenido
-  form(action="/users",method="POST")
-    div(class="form-group")
-      label(for="usuario") Usuario
-      input(type="text", name="usuario", placeholder="Usuario",id="email",class="form-control form-control-lg border-left-0")
-    div
-      label(for="password") Password
-      input(type="password", name="password", placeholder="Password",id="password",class="form-control form-control-lg border-left-0")
-    div
-      label(for="password") Confirmar Password
-      input(type="password", name="password_confirmation", placeholder="Password",id="password",class="form-control form-control-lg border-left-0")
-    div
-      input(type="submit" value="Registrar" class="btn btn-info")
+   .row.center-block
+      .col-xs-5.col-sm-4 
+          .container
+            img.img-rounded(src='./public/img/LOGO.png')
+            form(action="/users",method="POST")
+              div
+                label(for="usuario") Usuario
+                input(type="text", name="usuario", placeholder="Usuario",id="email",class="form-control form-control-lg border-left-0")
+              div
+                label(for="password") Password
+                input(type="password", name="password", placeholder="Password",id="password",class="form-control form-control-lg border-left-0")
+              div
+                label(for="password") Confirmar Password
+                input(type="password", name="password_confirmation", placeholder="Password",id="password",class="form-control form-control-lg border-left-0")
+              div
+                center: input(type="submit" value="Registrar" class="btn btn-info")
