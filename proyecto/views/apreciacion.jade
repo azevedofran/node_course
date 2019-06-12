@@ -1,0 +1,48 @@
+extends ./layout.jade
+block contenido
+
+          .container
+            form(action="/apreciacion",method="POST")
+              .form-inline
+                div(class="form-group")
+                  label(for="apr_persona") Cedula
+                  input(type="text", name="apr_persona", placeholder="Cedula",id="apr_persona",class="form-control form-control-lg border-left-0") 
+
+              div(class="form-group")
+                  label(for="apr_periodo") Periodo
+                  input(type="text", name="apr_periodo", placeholder="Periodo Apreciado",id="apr_periodo",class="form-control form-control-lg border-left-0")
+                      
+
+              div(class="form-group")
+                  label(for="apr_solucion_problema") Solucion de Problemas
+                  input(type="text", name="apr_solucion_problema", placeholder="Puntuacion",id="apr_solucion_problema",class="form-control form-control-lg border-left-0")
+                      
+              div(class="form-group")
+                  label(for="apr_conoce_negocio") Conocimiento del Negocio
+                  input(type="text", name="apr_conoce_negocio", placeholder="Puntuacion",id="apr_conoce_negocio",class="form-control form-control-lg border-left-0")
+
+              div(class="form-group")
+                  label(for="apr_habilidad_social") Habilidad Social
+                  input(type="text", name="apr_habilidad_social", placeholder="Puntuacion",id="apr_habilidad_social",class="form-control form-control-lg border-left-0")
+              
+
+              div(class="form-group")
+                  label(for="apr_liderazgo") Liderazgo
+                  input(type="text", name="apr_liderazgo", placeholder="Puntuacion",id="apr_liderazgo",class="form-control form-control-lg border-left-0")
+              
+              div(class="form-group")
+                  label(for="apr_auto_desarrollo") Autodesarrollo
+                  input(type="text", name="apr_auto_desarrollo", placeholder="Puntuacion",id="apr_auto_desarrollo",class="form-control form-control-lg border-left-0")
+              
+              div(class="form-group")
+                  label(for="apr_auto_motivacion") Automotivacion
+                  input(type="text", name="apr_auto_motivacion", placeholder="Puntuacion",id="apr_auto_motivacion",class="form-control form-control-lg border-left-0")
+              
+              div(class="form-group")
+                  label(for="apr_consolidado") Consolidado
+                  input(type="text", name="apr_consolidado", placeholder="Puntuacion",id="apr_consolidado",class="form-control form-control-lg border-left-0")
+
+              
+              
+              div
+                center: input(type="submit" value="Guardar" class="btn btn-info")

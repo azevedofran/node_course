@@ -31,6 +31,18 @@ app.get("/capacitacion",function (req,res) {
   res.render("capacitacion")
 });
 
+app.get("/infpersona",function (req,res) {
+  res.render("infpersona")
+});
+
+app.get("/educacion",function (req,res) {
+  res.render("educacion")
+});
+
+app.get("/apreciacion",function (req,res) {
+  res.render("apreciacion")
+});
+
 app.post("/users", function(req,res,ret){
   client.query("select usu_id from usuarios where usu_id='"+req.body.usuario+"'").then(rows=>{
     console.log(rows.rowCount);
@@ -85,7 +97,55 @@ app.post("/capacitacion", function(req,res,ret){
     }else{
       res.send("La persona no existe");
     }
-   
   })
 })
+
+app.post("/educacion", function(req,res,ret){
+ client.query("select per_cedula from PERSONA where per_cedula ='"+
+  req.body.cap_persona+"'").then(rows=>{
+    if(rows.rowCount >0){
+      client.query("insert into EDUCACION(edu_persona,edu_universidad,edu_tipo,edu_carrera,edu_fecha_inicio,edu_fecha_fin) values ($1, $2, $3, $4, $5, $6)", [req.body.cap_persona,req.body.cap_institucion,req.body.cap_curso,req.body.cap_descripcion,req.body.cap_fecha,req.body.cap_fecha_fin]); 
+      res.send("Educacion Fue Agregada");
+    }else{
+      res.send("La persona no existe");
+    }
+  })
+})
+
+
+app.post("/infpersona", function(req,res,ret){
+ client.query("select per_cedula from PERSONA where per_cedula ='"+
+  req.body.inf_per_persona+"'").then(rows=>{
+    if(rows.rowCount >0){
+      client.query("insert into INFORMACION_PERSONA values ($1, $2, $3)", [req.body.inf_per_persona,req.body.inf_per_informacion,req.body.inf_per_descripcion]); 
+      res.send("Informacion Fue Agregada");
+    }else{
+      res.send("La persona no existe");
+    }
+  })
+})
+
+app.post("/apreciacion", function(req,res,ret){
+ client.query("select per_cedula from PERSONA where per_cedula ='"+
+  req.body.apr_persona+"'").then(rows=>{
+    if(rows.rowCount >0){
+      client.query("select apr_periodo from APRECIACION where apr_persona='"+
+        req.body.apr_persona+"'and apr_periodo='"+req.body.apr_periodo+"'").then(cuenta=>{
+          if(cuenta.rowCount<=0){
+            client.query("insert into APRECIACION(apr_periodo,apr_solucion_problema,apr_conoce_negocio,apr_habilidad_social,apr_liderazgo,apr_auto_desarrollo,apr_auto_motivacion,apr_consolidado,apr_persona) values($1, $2, $3, $4, $5, $6, $7, $8, $9)",[req.body.apr_periodo,req.body.apr_solucion_problema,req.body.apr_conoce_negocio,req.body.apr_habilidad_social,req.body.apr_liderazgo,req.body.apr_auto_desarrollo,req.body.apr_auto_motivacion,req.body.apr_consolidado,req.body.apr_persona]);
+            res.send("Apreciacion Fue Agregada");  
+          }else{
+            res.send("Esta persona ya fue evaluada en ese periodo");
+          }
+          
+        })
+        
+    }else{
+      res.send("La persona no existe");
+    }
+  })
+})
+
+
+
 app.listen(8080);
