@@ -2,18 +2,13 @@ extends ./layout.jade
 block contenido
 
   
-  center: form(action="/usersLogin",method="POST")
-    .row
-      .col-xs-9.col-sm-4 
-          .container
-              img.img-rounded(src='./public/img/LOGO.png')
-              .form-inline 
-                div(class="form-group")
-                  label(for="usuario") Usuario: 
-                  input(type="text", name="usuario", placeholder="Usuario",id="email",class="form-control form-control-lg border-left-0")
-              .form-inline 
-                div(class="form-group")
-                  label(for="password") Password: 
-                  input(type="password", name="password", placeholder="Password",id="password",class="form-control form-control-lg border-left-0")
-              div
-                 center: input(type="submit" value="Iniciar Sesion" class="btn btn-info")
+  center: div(class="col-md-5 remove-float center-block text-center big-top-space") 
+    form(action="/usersLogin",method="POST")
+      div(class="form-group")
+        label(for="usuario") Usuario: 
+        input(type="text", name="usuario", placeholder="Usuario",id="email",class="form-control form-control-lg border-left-0")
+      div(class="form-group")
+        label(for="password") Password: 
+        input(type="password", name="password", placeholder="Password",id="password",class="form-control form-control-lg border-left-0")
+      div
+        center: input(type="submit" value="Iniciar Sesion" class="btn btn-info")

@@ -60,8 +60,10 @@ app.post("/users", function(req,res,ret){
 })
 // client.query(select * from tabla where atributo="algo")
 app.post("/usersLogin", function(req,res,ret){
+  //console.log("entro al post");
   client.query("select usu_contrasena from usuarios where usu_id ='"+
   req.body.usuario+"'").then(rows=>{
+    //console.log("entro al query");
       var consulta = rows.rows[0].usu_contrasena;
       if (consulta == req.body.password){
         res.send("Usuario Validado");
