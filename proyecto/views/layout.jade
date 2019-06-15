@@ -1,12 +1,31 @@
 doctype html
 html(lang="es")
   head
-    link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", rel="stylesheet")
     link(href="/public/css/app.css" rel="stylesheet")
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
     title CEPSA
     meta(charset=utf-8)
 
   body
+      div(class="remove-float center-block text-center big-top-space")
+        h1 Bienvenido a CEPSA
+        a(href="/") Indice
+        a  -
+        a(href="/registrar") Registrar
+        a  -  
+        a(href="/login") Iniciar Sesion
+        a  -  
+        a(href="/persona") Persona
+        a  -  
+        a(href="/capacitacion") Capacitacion
+        a  -  
+        a(href="/infpersona") Informacion de Interes
+        a  -  
+        a(href="/educacion") Educacion
+        a  -  
+        a(href="/apreciacion") Apreciacion
     block cabecera
     block contenido
     block pie_pagina

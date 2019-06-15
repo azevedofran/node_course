@@ -6,22 +6,33 @@ block contenido
               .form-inline
                   div(class="form-group")
                   label(for="cap_persona") Cedula
-                  input(type="text", name="cap_persona", placeholder="Cedula",id="cap_persona",class="form-control form-control-lg border-left-0") 
-
+                  select(name="cap_persona")#sel1.form-control
+                    -for (var i = 0; i < personas.rowCount; ++i)
+                      option=personas.rows[i].per_cedula
+                  
                   div(class="form-group")
                   label(for="cap_institucion") Universidad
-                  input(type="text", name="cap_institucion", placeholder="Instituto",id="cap_institucion",class="form-control form-control-lg border-left-0")
+                  select(name="cap_institucion")#sel1.form-control
+                    -for (var i = 0; i < universidades.rowCount; ++i)
+                      option=universidades.rows[i].uni_id
+                  
+                  
 
               
               .form-inline 
                 div(class="form-group")
                   label(for="cap_curso") Tipo de Carrera
-                  input(type="text", name="cap_curso", placeholder="Curso",id="cap_curso",class="form-control form-control-lg border-left-0")
+                  select(name="cap_curso")#sel1.form-control
+                    option Universitario Pregrado Carrera Larga
+                    option Universitario Pregrado Carrera Corta
+                    option Especializacion
+                    option Postgrado
+                    option Diplomado
               
               .form-inline 
                   div(class="form-group")
                   label(for="cap_descripcion") Carrera
-                  input(type="text", name="cap_descripcion", placeholder="Descripcion",id="cap_descripcion",class="form-control form-control-lg border-left-0")
+                  input(type="text", name="cap_descripcion", placeholder="Carrera",id="cap_descripcion",class="form-control form-control-lg border-left-0")
               
               .form-inline 
                 div(class="form-group")

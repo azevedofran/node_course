@@ -6,11 +6,16 @@ block contenido
               .form-inline
                   div(class="form-group")
                   label(for="cap_persona") Cedula
-                  input(type="text", name="cap_persona", placeholder="Cedula",id="cap_persona",class="form-control form-control-lg border-left-0") 
+                  select(name="cap_persona")#sel1.form-control
+                    -for (var i = 0; i < personas.rowCount; ++i)
+                      option=personas.rows[i].per_cedula
 
                   div(class="form-group")
                   label(for="cap_institucion") Instituto
-                  input(type="text", name="cap_institucion", placeholder="Instituto",id="cap_institucion",class="form-control form-control-lg border-left-0")
+                  select(name="cap_institucion")#sel1.form-control
+                    -for (var i = 0; i < instituciones.rowCount; ++i)
+                      option=instituciones.rows[i].ins_id
+                  
 
               
               .form-inline 

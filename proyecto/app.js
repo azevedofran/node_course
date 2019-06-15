@@ -24,23 +24,39 @@ app.get("/registrar",function (req,res) {
 });
 
 app.get("/persona",function (req,res){
-  res.render("persona")
+  client.query("select * from PROFESION").then(profesion=>{
+    res.render("persona",{profesiones: profesion})
+  })
 });
 
 app.get("/capacitacion",function (req,res) {
-  res.render("capacitacion")
+  client.query("select * from INSTITUCION").then(institucion=>{      
+    client.query("select per_cedula,per_nombre,per_apellido from persona").then(rows=>{
+      res.render("capacitacion",{personas: rows,instituciones: institucion})
+    })
+  })
 });
 
 app.get("/infpersona",function (req,res) {
-  res.render("infpersona")
+  client.query("select inf_id,inf_tipo from INFORMACION").then(informacion=>{      
+    client.query("select per_cedula,per_nombre,per_apellido from persona").then(rows=>{
+      res.render("infpersona",{personas: rows,informaciones: informacion})
+    })
+  })
 });
 
 app.get("/educacion",function (req,res) {
-  res.render("educacion")
+  client.query("select * from UNIVERSIDAD").then(universidad=>{      
+    client.query("select per_cedula,per_nombre,per_apellido from persona").then(rows=>{
+      res.render("educacion",{personas: rows,universidades: universidad})
+    })
+  })
 });
 
 app.get("/apreciacion",function (req,res) {
-  res.render("apreciacion")
+  client.query("select per_cedula,per_nombre,per_apellido from persona").then(rows=>{
+      res.render("apreciacion",{personas: rows})
+    })
 });
 
 app.post("/users", function(req,res,ret){
@@ -84,6 +100,7 @@ app.post("/persona", function(req,res,ret){
         var apellido2=null;
       }
       client.query("insert into PERSONA values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [req.body.per_cedula,req.body.per_nombre,nombre2,req.body.per_apellido,apellido2,req.body.per_fecha_nacimiento,req.body.per_edo_civil,req.body.per_correo,req.body.per_genero,req.body.per_profesion]); 
+      client.query("insert into TELEFONO(tel_cod_area,tel_numero,tel_tipo,tel_persona) values($1,$2,$3,$4)",[req.body.tel_cod_area,req.body.tel_numero,req.body.tel_tipo,req.body.per_cedula])
       res.send("Persona Fue Agregada");
     } else{
       res.send("Persona Ya Existe");
@@ -116,10 +133,12 @@ app.post("/educacion", function(req,res,ret){
 
 
 app.post("/infpersona", function(req,res,ret){
+console.log(req.body.cedula)
+console.log(req.body.informacion)
  client.query("select per_cedula from PERSONA where per_cedula ='"+
-  req.body.inf_per_persona+"'").then(rows=>{
+  req.body.cedula+"'").then(rows=>{
     if(rows.rowCount >0){
-      client.query("insert into INFORMACION_PERSONA values ($1, $2, $3)", [req.body.inf_per_persona,req.body.inf_per_informacion,req.body.inf_per_descripcion]); 
+      client.query("insert into INFORMACION_PERSONA values ($1, $2, $3)", [req.body.cedula,req.body.informacion,req.body.inf_per_descripcion]); 
       res.send("Informacion Fue Agregada");
     }else{
       res.send("La persona no existe");

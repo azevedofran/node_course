@@ -30,8 +30,13 @@ block contenido
                   input(type="text", name="per_fecha_nacimiento", placeholder="yyyy-mm-dd",id="per_fecha_nacimiento",class="form-control form-control-lg border-left-0")
               .form-inline 
                 div(class="form-group")
-                  label(for="per_edo_civil") Estado Civil
-                  input(type="text", name="per_edo_civil", placeholder="Estado Civil",id="per_edo_civil",class="form-control form-control-lg border-left-0")
+                  label(for="per_edo_civil") Edo Civil
+                  select(name="per_edo_civil")#sel1.form-control
+                    option S
+                    option C
+                    option D
+                    option V
+                    option CB
 
                 div(class="form-group")
                   label(for="per_correo") Correo Electronico
@@ -39,11 +44,16 @@ block contenido
               .form-inline 
                 div(class="form-group")
                   label(for="per_genero") Genero
-                  input(type="text", name="per_genero", placeholder="Genero",id="per_genero",class="form-control form-control-lg border-left-0")
+                  select(name="per_genero")#sel1.form-control
+                    option F
+                    option M
 
                 div(class="form-group")
                   label(for="per_profesion") Profesion
-                  input(type="text", name="per_profesion", placeholder="Profesion",id="per_profesion",class="form-control form-control-lg border-left-0")
+                  select(name="per_profesion")#sel1.form-control
+                    -for (var i = 0; i < profesiones.rowCount; ++i)
+                      option=profesiones.rows[i].pro_id
+
               .form-inline 
                 div(class="form-group")
                   label(for="direccion") Direccion
@@ -51,7 +61,20 @@ block contenido
 
                 div(class="form-group")
                   label(for="telefono") Telefono
-                  input(type="telefono", name="telefono", placeholder="Telefono",id="telefono",class="form-control form-control-lg border-left-0")
+                  select(name="tel_tipo")#sel1.form-control
+                    option LOCAL
+                    option MOVIL
+
+                  select(name="tel_cod_area")#sel1.form-control
+                    option 0212
+                    option 0412
+                    option 0414
+                    option 0424
+                    option 0416
+                    option 0426
+
+
+                  input(type="telefono", name="tel_numero", placeholder="Telefono",id="tel_numero",class="form-control form-control-lg border-left-0")
 
               div
                 center: input(type="submit" value="Guardar" class="btn btn-info")
