@@ -59,6 +59,12 @@ app.get("/apreciacion",function (req,res) {
     })
 });
 
+app.get("/curriculum",function (req,res) {
+  client.query("select * from persona").then(rows=>{
+      res.render("curriculum",{personas: rows})
+    })
+});
+
 app.post("/users", function(req,res,ret){
   client.query("select usu_id from usuarios where usu_id='"+req.body.usuario+"'").then(rows=>{
     console.log(rows.rowCount);

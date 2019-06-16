@@ -1,0 +1,33 @@
+extends ./layout.jade
+block contenido
+
+
+
+    form(action="/curriculum",method="POST")
+
+      div(class="form-group")
+        label(for="inf_per_persona") Cedula
+          select(name="cedula")#sel1.form-control
+            -for (var i = 0; i < personas.rowCount; ++i)
+              option=personas.rows[i].per_cedula
+        input(type="onClick" value="Generar" class="btn btn-info")
+    
+      div
+       table.table.table-striped.table-responsive
+        thead
+         tr: th C.I.
+             th Nombres
+             th
+             th Apellidos
+             th
+             th Correo
+          tbody
+              -for (var i = 0; i < personas.rowCount; ++i)
+                tr
+                  td=personas.rows[i].per_cedula
+                  td=personas.rows[i].per_nombre
+                  td=personas.rows[i].per_nombre2
+                  td=personas.rows[i].per_apellido
+                  td=personas.rows[i].per_apellido2
+                  td=personas.rows[i].per_correo
+        table.table
