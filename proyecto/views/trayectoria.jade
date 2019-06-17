@@ -1,0 +1,44 @@
+extends ./layout.jade
+block contenido
+
+          .container
+            form(action="/trayectoria",method="POST")
+              .form-inline
+                  div(class="form-group")
+                  label(for="tra_persona") Cedula
+                  select(name="tra_persona")#sel1.form-control
+                    -for (var i = 0; i < personas.rowCount; ++i)
+                      option=personas.rows[i].per_cedula
+
+                  div(class="form-group")
+                  label(for="tra_cargo") Cargo
+                  select(name="tra_cargo")#sel1.form-control
+                    -for (var i = 0; i < cargos.rowCount; ++i)
+                      option=cargos.rows[i].car_cargo
+ 
+                  div(class="form-group")
+                    label(for="tra_pmc") PMC
+                    select(name="tra_pmc")#sel1.form-control
+                      option SI
+                      option NO  
+
+              .form-inline
+                div(class="form-group")
+                    label(for="tra_tipo_trabajo") PMC
+                    select(name="tra_tipo_trabajo")#sel1.form-control
+                      option EMPRESA
+                      option INSTITUCION
+                    input(type="text", name="tra_empresa", placeholder="Nombre",id="per_apellido",class="form-control form-control-lg border-left-0")
+
+              
+              .form-inline 
+                div(class="form-group")
+                label(for="fecha_inicio") Fecha de Inicio
+                input(type="text", name="tra_fecha_inicio", placeholder="yyyy-mm-dd",id="tra_fecha_inicio",class="form-control form-control-lg border-left-0")
+
+                div(class="form-group")
+                label(for="tra_fecha_fin") Fecha de Finalizacion
+                input(type="text", name="tra_fecha_fin", placeholder="yyyy-mm-dd",id="tra_fecha_fin",class="form-control form-control-lg border-left-0")       
+
+              div
+                center: input(type="submit" value="Agregar" class="btn btn-info")
