@@ -189,6 +189,7 @@ app.post("/trayectoria", function(req,res,ret){
            var tra_fecha_fin=req.body.tra_fecha_fin;
         }
     client.query("insert into TRAYECTORIA(tra_cargo,tra_persona,tra_pmc,tra_tipo_trabajo,tra_empresa,tra_fecha_inicio,tra_fecha_fin) values ($1,$2,$3,$4,$5,$6,$7)",[cargo.rows[0].car_id,req.body.tra_persona,req.body.tra_pmc,req.body.tra_tipo_trabajo,req.body.tra_empresa,req.body.tra_fecha_inicio,tra_fecha_fin])
+  res.send("El trabajo fue agregado a la trayectoria sin problemas");
   })
 })
 
