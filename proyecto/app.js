@@ -131,42 +131,56 @@ app.post("/persona", function(req,res,ret){
 })
 
 app.post("/capacitacion", function(req,res,ret){
- client.query("select per_cedula from PERSONA where per_cedula ='"+
-  req.body.cap_persona+"'").then(rows=>{
-    if(rows.rowCount >0){
-      client.query("insert into CAPACITACION values ($1, $2, $3, $4, $5, $6)", [req.body.cap_persona,req.body.cap_institucion,req.body.cap_curso,req.body.cap_descripcion,req.body.cap_fecha,req.body.cap_horas]); 
-      res.send("capacitacion Fue Agregada");
-    }else{
-      res.send("La persona no existe");
-    }
-  })
+  var fecha = req.body.cap_fecha.split("/"); 
+  var fecha_cap = fecha[2]+'-'+fecha[1]+'-'+fecha[0];
+  client.query("select ins_id from INSTITUCION where ins_nombre ='"+
+    req.body.cap_institucion+"'").then(institucion=>{ 
+   client.query("select per_cedula from PERSONA where per_cedula ='"+
+    req.body.cap_persona+"'").then(rows=>{
+      if(rows.rowCount >0){
+        client.query("insert into CAPACITACION values ($1, $2, $3, $4, $5, $6)", [req.body.cap_persona,institucion.rows[0].ins_id,req.body.cap_curso,req.body.cap_descripcion,fecha_cap,req.body.cap_horas]); 
+        res.send("capacitacion Fue Agregada");
+      }else{
+        res.send("La persona no existe");
+      }
+    })
+  })  
 })
 
 app.post("/educacion", function(req,res,ret){
- client.query("select per_cedula from PERSONA where per_cedula ='"+
-  req.body.cap_persona+"'").then(rows=>{
-    if(rows.rowCount >0){
-      client.query("insert into EDUCACION(edu_persona,edu_universidad,edu_tipo,edu_carrera,edu_fecha_inicio,edu_fecha_fin) values ($1, $2, $3, $4, $5, $6)", [req.body.cap_persona,req.body.cap_institucion,req.body.cap_curso,req.body.cap_descripcion,req.body.cap_fecha,req.body.cap_fecha_fin]); 
-      res.send("Educacion Fue Agregada");
-    }else{
-      res.send("La persona no existe");
-    }
+ var fecha = req.body.cap_fecha.split("/"); 
+ var fecha_cap = fecha[2]+'-'+fecha[1]+'-'+fecha[0]; 
+
+ var fecha2 = req.body.cap_fecha_fin.split("/"); 
+ var fecha_cap_fin = fecha2[2]+'-'+fecha2[1]+'-'+fecha2[0];
+  client.query("select uni_id from UNIVERSIDAD where uni_nombre='"+
+    req.body.cap_institucion+"'").then(universidad=>{
+   client.query("select per_cedula from PERSONA where per_cedula ='"+
+    req.body.cap_persona+"'").then(rows=>{
+      if(rows.rowCount >0){
+        client.query("insert into EDUCACION(edu_persona,edu_universidad,edu_tipo,edu_carrera,edu_fecha_inicio,edu_fecha_fin) values ($1, $2, $3, $4, $5, $6)", [req.body.cap_persona,universidad.rows[0].uni_id,req.body.cap_curso,req.body.cap_descripcion,fecha_cap,fecha_cap_fin]); 
+        res.send("Educacion Fue Agregada");
+      }else{
+        res.send("La persona no existe");
+      }
+    })
   })
 })
 
 
 app.post("/infpersona", function(req,res,ret){
-console.log(req.body.cedula)
-console.log(req.body.informacion)
- client.query("select per_cedula from PERSONA where per_cedula ='"+
-  req.body.cedula+"'").then(rows=>{
-    if(rows.rowCount >0){
-      client.query("insert into INFORMACION_PERSONA values ($1, $2, $3)", [req.body.cedula,req.body.informacion,req.body.inf_per_descripcion]); 
-      res.send("Informacion Fue Agregada");
-    }else{
-      res.send("La persona no existe");
-    }
-  })
+  client.query("select inf_id from INFORMACION where inf_tipo ='"+
+    req.body.inf_per_informacion+"'").then(informacion=>{ 
+   client.query("select per_cedula from PERSONA where per_cedula ='"+
+    req.body.cedula+"'").then(rows=>{
+      if(rows.rowCount >0){
+        client.query("insert into INFORMACION_PERSONA values ($1, $2, $3)", [req.body.cedula,informacion.rows[0].inf_id,req.body.inf_per_descripcion]); 
+        res.send("Informacion Fue Agregada");
+      }else{
+        res.send("La persona no existe");
+      }
+    })
+  })  
 })
 
 app.post("/apreciacion", function(req,res,ret){
