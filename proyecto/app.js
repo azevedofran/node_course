@@ -80,7 +80,7 @@ app.post("/users", function(req,res,ret){
       client.query("insert into USUARIOS values ($1, $2)", [req.body.usuario,req.body.password]);
       console.log("Password: "+ req.body.password);
       console.log("Usuario: "+ req.body.usuario);
-      res.send("Recibimos tus datos");
+      res.render('login');
     }else if (req.body.password != req.body.password_confirmation){
       res.send("El password indicado no esta bien");
     }else if (rows.rowCount>0){
@@ -93,34 +93,43 @@ app.post("/usersLogin", function(req,res,ret){
   //console.log("entro al post");
   client.query("select usu_contrasena from usuarios where usu_id ='"+
   req.body.usuario+"'").then(rows=>{
-    //console.log("entro al query");
       var consulta = rows.rows[0].usu_contrasena;
       if (consulta == req.body.password){
-        res.send("Usuario Validado");
-      }else{
+            console.log("entro1 al query");
+
+        res.render('index');
+      }else if (consulta!=req.body.password){
+            console.log("entro 22al query");
+
         res.send("Usuario o Contrasena invalido");
       }
   })
 })
 
 app.post("/persona", function(req,res,ret){
-  client.query("select per_cedula from persona where per_cedula='"+
-  req.body.per_cedula+"'").then(rows=>{
-    if (rows.rowCount <=0){
-      if (req.body.per_nombre2==''){
-        var nombre2=null;
+  client.query("select pro_id from profesion where pro_profesion='"+req.body.per_profesion+"'").then(profesion=>{  
+    client.query("select per_cedula from persona where per_cedula='"+
+    req.body.per_cedula+"'").then(rows=>{
+      if (rows.rowCount <=0){
+        if (req.body.per_nombre2==''){
+          var nombre2=null;
+        }
+        if (req.body.per_apellido2==''){
+          var apellido2=null;
+        }
+        var fecha = req.body.per_fecha_nacimiento.split("/"); 
+        var fecha_nac = fecha[2]+'-'+fecha[1]+'-'+fecha[0];
+        client.query("insert into PERSONA values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [req.body.per_cedula,req.body.per_nombre,nombre2,req.body.per_apellido,apellido2,fecha_nac,req.body.per_edo_civil,req.body.per_correo,req.body.per_genero,profesion.rows[0].pro_id]); 
+        client.query("insert into TELEFONO(tel_cod_area,tel_numero,tel_tipo,tel_persona) values($1,$2,$3,$4)",[req.body.tel_cod_area,req.body.tel_numero,req.body.tel_tipo,req.body.per_cedula])
+        client.query("insert into direccion(dir_direccion,dir_persona) values($1,$2)",[req.body.per_direccion,req.body.per_cedula])
+        res.send("Persona Fue Agregada");
+      } else{
+        res.send("Persona Ya Existe");
       }
-      if (req.body.per_apellido2==''){
-        var apellido2=null;
-      }
-      client.query("insert into PERSONA values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [req.body.per_cedula,req.body.per_nombre,nombre2,req.body.per_apellido,apellido2,req.body.per_fecha_nacimiento,req.body.per_edo_civil,req.body.per_correo,req.body.per_genero,req.body.per_profesion]); 
-      client.query("insert into TELEFONO(tel_cod_area,tel_numero,tel_tipo,tel_persona) values($1,$2,$3,$4)",[req.body.tel_cod_area,req.body.tel_numero,req.body.tel_tipo,req.body.per_cedula])
-      res.send("Persona Fue Agregada");
-    } else{
-      res.send("Persona Ya Existe");
-    }
+    })
   })
 })
+
 app.post("/capacitacion", function(req,res,ret){
  client.query("select per_cedula from PERSONA where per_cedula ='"+
   req.body.cap_persona+"'").then(rows=>{

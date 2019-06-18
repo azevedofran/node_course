@@ -1,14 +1,70 @@
-extends ./layout.jade
-block contenido
+doctype html
 
-  
-  center: div(class="col-md-5 remove-float center-block text-center big-top-space") 
-    form(action="/usersLogin",method="POST")
-      div(class="form-group")
-        label(for="usuario") Usuario: 
-        input(type="text", name="usuario", placeholder="Usuario",id="email",class="form-control form-control-lg border-left-0")
-      div(class="form-group")
-        label(for="password") Password: 
-        input(type="password", name="password", placeholder="Password",id="password",class="form-control form-control-lg border-left-0")
-      div
-        center: input(type="submit" value="Iniciar Sesion" class="btn btn-info")
+head
+  title Login V1
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  // ===============================================================================================
+  link(rel='icon' type='image/png' href='../public/img/icons/favicon.ico')
+  // ===============================================================================================
+  link(rel='stylesheet' type='text/css' href='../public/vendor/bootstrap/css/bootstrap.min.css')
+  // ===============================================================================================
+  link(rel='stylesheet' type='text/css' href='../public/fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+  // ===============================================================================================
+  link(rel='stylesheet' type='text/css' href='../public/vendor/animate/animate.css')
+  // ===============================================================================================
+  link(rel='stylesheet' type='text/css' href='../public/vendor/css-hamburgers/hamburgers.min.css')
+  // ===============================================================================================
+  link(rel='stylesheet' type='text/css' href='../public/vendor/select2/select2.min.css')
+  // ===============================================================================================
+  link(rel='stylesheet' type='text/css' href='../public/css/util.css')
+  link(rel='stylesheet' type='text/css' href='../public/css/main.css')
+  // ===============================================================================================
+.limiter
+  .container-login100
+    .wrap-login100
+      .login100-pic.js-tilt(data-tilt='')
+        img(src='../public/img/LOGO CENTRAL EL PALMAR.png' alt='IMG')
+      form(action="/usersLogin",method="POST").login100-form.validate-form
+        span.login100-form-title
+          | Bienvenido
+        .wrap-input100.validate-input(data-validate='Valid email is required: ex@abc.xyz')
+          input.input100(type='text' name='usuario' placeholder='Usuario')
+          span.focus-input100
+          span.symbol-input100
+            i.fa.fa-envelope(aria-hidden='true')
+        .wrap-input100.validate-input(data-validate='Password is required')
+          input.input100(type='password' name='password' placeholder='Password')
+          span.focus-input100
+          span.symbol-input100
+            i.fa.fa-lock(aria-hidden='true')
+        .container-login100-form-btn
+          input(type="submit" value="Iniciar Sesion" class="btn btn-info").login100-form-btn
+        .text-center.p-t-12
+
+
+        .text-center.p-t-136
+          a.txt2(href='/registrar')
+            | Registrar usuario
+            i.fa.fa-long-arrow-right.m-l-5(aria-hidden='true')
+// ===============================================================================================
+script(src='../public/vendor/jquery/jquery-3.2.1.min.js')
+// ===============================================================================================
+script(src='../public/vendor/bootstrap/js/popper.js')
+script(src='../public/vendor/bootstrap/js/bootstrap.min.js')
+// ===============================================================================================
+script(src='../public/vendor/select2/select2.min.js')
+// ===============================================================================================
+script(src='../public/vendor/tilt/tilt.jquery.min.js')
+script.
+  $('.js-tilt').tilt({
+  scale: 1.1
+  })
+// ===============================================================================================
+script(src='../public/js/main.js')
+
+
+
+
+
+
