@@ -32,7 +32,7 @@ head
                   select(name="cap_persona")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
                     -for (var i = 0; i < personas.rowCount; ++i)
-                      option=personas.rows[i].per_cedula
+                      option=personas.rows[i].per_cedula+' | '+personas.rows[i].per_nombre+' | '+personas.rows[i].per_apellido
                   .select-dropdown
               .p-t-15
 
@@ -40,7 +40,7 @@ head
               .input-group
                 label.label Universidad
                 .rs-select2.js-select-simple
-                  select(name="cap_institucion")#sel1.form-control
+                  select(name="cap_institucion" type="text")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
                     -for (var i = 0; i < universidades.rowCount; ++i)
                       option=universidades.rows[i].uni_nombre

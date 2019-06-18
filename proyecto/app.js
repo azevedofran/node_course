@@ -166,18 +166,22 @@ app.post("/educacion", function(req,res,ret){
 
  var fecha2 = req.body.cap_fecha_fin.split("/"); 
  var fecha_cap_fin = fecha2[2]+'-'+fecha2[1]+'-'+fecha2[0];
-  client.query("select uni_id from UNIVERSIDAD where uni_nombre='"+
-    req.body.cap_institucion+"'").then(universidad=>{
-   client.query("select per_cedula from PERSONA where per_cedula ='"+
-    req.body.cap_persona+"'").then(rows=>{
-      if(rows.rowCount >0){
-        client.query("insert into EDUCACION(edu_persona,edu_universidad,edu_tipo,edu_carrera,edu_fecha_inicio,edu_fecha_fin) values ($1, $2, $3, $4, $5, $6)", [req.body.cap_persona,universidad.rows[0].uni_id,req.body.cap_curso,req.body.cap_descripcion,fecha_cap,fecha_cap_fin]); 
-        res.send("Educacion Fue Agregada");
-      }else{
-        res.send("La persona no existe");
-      }
+ if(req.body.cap_persona!=undefined){
+    var cedula=req.body.cap_persona.split(" | ",1)
+
+    client.query("select uni_id from UNIVERSIDAD where uni_nombre='"+
+      req.body.cap_institucion+"'").then(universidad=>{
+     client.query("select per_cedula from PERSONA where per_cedula ='"+
+      cedula+"'").then(rows=>{
+        if(rows.rowCount >0){
+          client.query("insert into EDUCACION(edu_persona,edu_universidad,edu_tipo,edu_carrera,edu_fecha_inicio,edu_fecha_fin) values ($1, $2, $3, $4, $5, $6)", [parseInt(cedula),universidad.rows[0].uni_id,req.body.cap_curso,req.body.cap_descripcion,fecha_cap,fecha_cap_fin]); 
+          res.send("Educacion Fue Agregada");
+        }else{
+          res.send("La persona no existe");
+        }
+      })
     })
-  })
+  }    
 })
 
 
