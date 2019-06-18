@@ -7,7 +7,7 @@ head
   meta(name='author' content='Colorlib')
   meta(name='keywords' content='Colorlib Templates')
   // Title Page
-  title Au Register Forms by Colorlib
+  title Apreciacion
   // Icons font CSS
   link(href='../public/vendor2/mdi-font/css/material-design-iconic-font.min.css' rel='stylesheet' media='all')
   link(href='../public/vendor2/font-awesome-4.7/css/font-awesome.min.css' rel='stylesheet' media='all')
@@ -28,7 +28,7 @@ head
             .col-2
               .input-group
                 label.label Persona
-                .rs-select2.js-select-simple.select--no-search
+                .rs-select2.js-select-simple
                   select(name="apr_persona")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
                     -for (var i = 0; i < personas.rowCount; ++i)
@@ -39,13 +39,13 @@ head
             .col-2
               .input-group
                 label.label Periodo
-                input.input--style-4(type='text' name='apr_periodo')
+                input.input--style-4(type='text' name='apr_periodo' placeholder='año')
 
           .row.row-space
               .col-2
                 .input-group
                   label.label  Solucionar Problemas
-                  .rs-select2.js-select-simple.select--no-search
+                  .rs-select2.js-select-simple
                     select(name='apr_solucion_problema')
                       option(disabled='disabled' selected='selected') Seleccione 
                       option 1
@@ -63,7 +63,7 @@ head
               .col-2
                 .input-group
                   label.label  Conocimiento del Negocio
-                  .rs-select2.js-select-simple.select--no-search
+                  .rs-select2.js-select-simple
                     select(name='apr_conoce_negocio')
                       option(disabled='disabled' selected='selected') Seleccione 
                       option 1
@@ -82,7 +82,7 @@ head
               .col-2
                 .input-group
                   label.label  Habilidad Social
-                  .rs-select2.js-select-simple.select--no-search
+                  .rs-select2.js-select-simple
                     select(name='apr_habilidad_social')
                       option(disabled='disabled' selected='selected') Seleccione 
                       option 1
@@ -100,7 +100,7 @@ head
               .col-2
                 .input-group
                   label.label  Liderazgo
-                  .rs-select2.js-select-simple.select--no-search
+                  .rs-select2.js-select-simple
                     select(name='apr_liderazgo')
                       option(disabled='disabled' selected='selected') Seleccione 
                       option 1
@@ -119,7 +119,7 @@ head
               .col-2
                 .input-group
                   label.label  Autodesarrollo
-                  .rs-select2.js-select-simple.select--no-search
+                  .rs-select2.js-select-simple
                     select(name='apr_auto_desarrollo')
                       option(disabled='disabled' selected='selected') Seleccione 
                       option 1
@@ -137,7 +137,7 @@ head
               .col-2
                 .input-group
                   label.label  Automotivacion
-                  .rs-select2.js-select-simple.select--no-search
+                  .rs-select2.js-select-simple
                     select(name='apr_auto_motivacion')
                       option(disabled='disabled' selected='selected') Seleccione 
                       option 1
@@ -154,7 +154,7 @@ head
               .col-2
                 .input-group
                   label.label  Consolidado
-                  .rs-select2.js-select-simple.select--no-search
+                  .rs-select2.js-select-simple
                     select(name='apr_consolidado')
                       option(disabled='disabled' selected='selected') Seleccione 
                       option 1

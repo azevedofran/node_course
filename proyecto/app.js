@@ -15,6 +15,10 @@ app.get("/",function (req,res) {
   res.render("index")
 });
 
+app.get("/indice",function (req,res) {
+  res.render("indice")
+});
+
 app.get("/login",function (req,res) {
   res.render("login")
 });
@@ -61,8 +65,10 @@ app.get("/apreciacion",function (req,res) {
 
 app.get("/curriculum",function (req,res) {
   client.query("select * from persona").then(rows=>{
-      res.render("curriculum",{personas: rows})
+    client.query("select * from persona").then(cuadro=>{
+        res.render("curriculum",{personas: rows,cuadros: cuadro})
     })
+  })  
 });
 
 app.get("/trayectoria",function (req,res) {
@@ -72,6 +78,13 @@ app.get("/trayectoria",function (req,res) {
     })
   })  
 });
+
+app.post("/nav_persona",function (req,res,ret){
+  client.query("select * from PROFESION").then(profesion=>{
+    res.render("persona",{profesiones: profesion})
+  })
+});
+
 
 app.post("/users", function(req,res,ret){
   client.query("select usu_id from usuarios where usu_id='"+req.body.usuario+"'").then(rows=>{
@@ -205,16 +218,41 @@ app.post("/apreciacion", function(req,res,ret){
 })
 
 app.post("/trayectoria", function(req,res,ret){
+ var fecha = req.body.cap_fecha.split("/"); 
+ var fecha_cap = fecha[2]+'-'+fecha[1]+'-'+fecha[0]; 
+
+ if(req.body.cap_fecha_fin!=''){
+   var fecha2 = req.body.cap_fecha_fin.split("/"); 
+   var fecha_cap_fin = fecha2[2]+'-'+fecha2[1]+'-'+fecha2[0];
+ }else{
+   var fecha_cap_fin =null;
+ }
+
   client.query("select car_id from CARGO where car_cargo='"+req.body.tra_cargo+"'").then(cargo=>{
-    if (req.body.tra_fecha_fin==''){
-          var tra_fecha_fin=null;
-        } else{
-           var tra_fecha_fin=req.body.tra_fecha_fin;
-        }
-    client.query("insert into TRAYECTORIA(tra_cargo,tra_persona,tra_pmc,tra_tipo_trabajo,tra_empresa,tra_fecha_inicio,tra_fecha_fin) values ($1,$2,$3,$4,$5,$6,$7)",[cargo.rows[0].car_id,req.body.tra_persona,req.body.tra_pmc,req.body.tra_tipo_trabajo,req.body.tra_empresa,req.body.tra_fecha_inicio,tra_fecha_fin])
+    client.query("insert into TRAYECTORIA(tra_cargo,tra_persona,tra_pmc,tra_tipo_trabajo,tra_empresa,tra_fecha_inicio,tra_fecha_fin) values ($1,$2,$3,$4,$5,$6,$7)",[cargo.rows[0].car_id,req.body.tra_persona,req.body.tra_pmc,req.body.tra_tipo_trabajo,req.body.tra_empresa,fecha_cap,fecha_cap_fin])
   res.send("El trabajo fue agregado a la trayectoria sin problemas");
   })
 })
 
+
+
+app.post("/curriculum",function (req,res,ret) {
+  if(req.body.cedula!=undefined){
+    var cedula=req.body.cedula.split(" | ",1)
+    client.query("select * from persona").then(rows=>{
+    client.query("select * from persona where per_cedula='"+cedula+"'").then(cuadro=>{
+        res.render("curriculum",{personas: rows,cuadros: cuadro})
+    })
+  })
+  }else{
+    client.query("select * from persona").then(rows=>{
+      client.query("select * from persona").then(cuadro=>{
+          res.render("curriculum",{personas: rows,cuadros: cuadro})
+      })
+    })
+  }
+  
+  
+});
 
 app.listen(8080);

@@ -7,7 +7,7 @@ head
   meta(name='author' content='Colorlib')
   meta(name='keywords' content='Colorlib Templates')
   // Title Page
-  title Au Register Forms by Colorlib
+  title Capacitacion
   // Icons font CSS
   link(href='../public/vendor2/mdi-font/css/material-design-iconic-font.min.css' rel='stylesheet' media='all')
   link(href='../public/vendor2/font-awesome-4.7/css/font-awesome.min.css' rel='stylesheet' media='all')
@@ -28,7 +28,7 @@ head
             .col-2
               .input-group
                 label.label Persona
-                .rs-select2.js-select-simple.select--no-search
+                .rs-select2.js-select-simple
                   select(name="cap_persona")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
                     -for (var i = 0; i < personas.rowCount; ++i)
@@ -39,7 +39,7 @@ head
             .col-2
               .input-group
                 label.label Institucion
-                .rs-select2.js-select-simple.select--no-search
+                .rs-select2.js-select-simple
                   select(name="cap_institucion")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
                     -for (var i = 0; i < instituciones.rowCount; ++i)

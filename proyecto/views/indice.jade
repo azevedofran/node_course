@@ -1,7 +1,7 @@
 doctype html
 
 head
-  title Login
+  title Login V1
   meta(charset='UTF-8')
   meta(name='viewport' content='width=device-width, initial-scale=1')
   // ===============================================================================================
@@ -25,22 +25,23 @@ head
     .wrap-login100
       .login100-pic.js-tilt(data-tilt='')
         img(src='../public/img/LOGO CENTRAL EL PALMAR.png' alt='IMG')
-      form(action="/usersLogin",method="POST").login100-form.validate-form
+      form(action="/indice").login100-form
         span.login100-form-title
           | Bienvenido
-        .wrap-input100.validate-input(data-validate='Valid email is required: ex@abc.xyz')
-          input.input100(type='text' name='usuario' placeholder='Usuario')
-          span.focus-input100
-          span.symbol-input100
-            i.fa.fa-user(aria-hidden='true')
-        .wrap-input100.validate-input(data-validate='Password is required')
-          input.input100(type='password' name='password' placeholder='Password')
-          span.focus-input100
-          span.symbol-input100
-            i.fa.fa-lock(aria-hidden='true')
+        form(action="/nav_persona",method="POST").login100-form
+          .container-login100-form-btn
+            input(type="submit" value="Persona" class="btn btn-info").login100-form-btn
+          .text-center.p-t-12
+        .container-login100-form-btn
+          input(type="submit" value="Iniciar Sesion" class="btn btn-info").login100-form-btn
+        .text-center.p-t-12  
         .container-login100-form-btn
           input(type="submit" value="Iniciar Sesion" class="btn btn-info").login100-form-btn
         .text-center.p-t-12
+        .container-login100-form-btn
+          input(type="submit" value="Iniciar Sesion" class="btn btn-info").login100-form-btn
+        .text-center.p-t-12
+
 
 
         .text-center.p-t-136
