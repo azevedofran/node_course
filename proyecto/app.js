@@ -243,11 +243,28 @@ app.post("/trayectoria", function(req,res,ret){
 app.post("/curriculum",function (req,res,ret) {
   if(req.body.cedula!=undefined){
     var cedula=req.body.cedula.split(" | ",1)
-    client.query("select * from persona").then(rows=>{
-    client.query("select * from persona where per_cedula='"+cedula+"'").then(cuadro=>{
-        res.render("curriculum",{personas: rows,cuadros: cuadro})
-    })
-  })
+       client.query("select tel_cod_area,tel_numero,tel_tipo from telefono where tel_persona='"+cedula+"'").then(telefono=>{
+        client.query("select inf_tipo,inf_per_descripcion from informacion,informacion_persona where inf_per_persona='"+cedula+"' and inf_per_informacion=inf_id").then(informacion=>{
+          client.query("select cap_curso,ins_nombre,cap_fecha,cap_horas from capacitacion,institucion where cap_persona='"+cedula+"'and ins_id=cap_institucion").then(capacitacion=>{      
+            //aca va el select de institucion
+            client.query("select tra_empresa,tra_fecha_inicio,tra_fecha_fin,tra_cargo from trayectoria where tra_persona='"+cedula+"'and tra_pmc='NO'").then(trayectoriaEXT=>{      
+              //Select de cargo
+              client.query("select tra_empresa,tra_fecha_inicio,tra_cargo from trayectoria where tra_persona='"+cedula+"'and tra_pmc='SI'").then(trayectoriaPMC=>{  
+                //select de cargo
+                client.query("select * from educacion where edu_persona='"+cedula+"'").then(educacion=>{
+                  //select de universidad
+                  client.query("select * from persona").then(rows=>{
+                    client.query("select per_cedula,per_nombre,per_nombre2,per_apellido,per_apellido2,per_fecha_nacimiento,per_edo_civil,per_correo,pro_profesion,tel_cod_area,tel_numero,tel_tipo from telefono,profesion,persona where per_profesion=pro_id and per_cedula='"+cedula+"' and tel_persona='"+cedula+"'").then(cuadro=>{
+                        res.render("curriculum2",{personas: rows,cuadros: cuadro, educaciones: educacion, trayActual: trayectoriaPMC, trayAnterior: trayectoriaEXT, capacitaciones: capacitacion, informaciones: informacion, telefonos: telefono})
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
+      })  
+
   }else{
     client.query("select * from persona").then(rows=>{
       client.query("select * from persona").then(cuadro=>{
