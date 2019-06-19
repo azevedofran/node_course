@@ -247,9 +247,9 @@ app.post("/curriculum",function (req,res,ret) {
         client.query("select inf_tipo,inf_per_descripcion from informacion,informacion_persona where inf_per_persona='"+cedula+"' and inf_per_informacion=inf_id").then(informacion=>{
           client.query("select cap_curso,ins_nombre,cap_fecha,cap_horas from capacitacion,institucion where cap_persona='"+cedula+"'and ins_id=cap_institucion").then(capacitacion=>{      
             //aca va el select de institucion
-            client.query("select tra_empresa,tra_fecha_inicio,tra_fecha_fin,tra_cargo from trayectoria where tra_persona='"+cedula+"'and tra_pmc='NO'").then(trayectoriaEXT=>{      
+            client.query("select tra_empresa,tra_fecha_inicio,tra_fecha_fin,car_cargo from trayectoria,cargo where car_id=tra_cargo and tra_persona='"+cedula+"'and tra_pmc='NO'").then(trayectoriaEXT=>{      
               //Select de cargo
-              client.query("select tra_empresa,tra_fecha_inicio,tra_cargo from trayectoria where tra_persona='"+cedula+"'and tra_pmc='SI'").then(trayectoriaPMC=>{  
+              client.query("select tra_empresa,tra_fecha_inicio,car_cargo from trayectoria,cargo where car_id=tra_cargo and tra_persona='"+cedula+"'and tra_pmc='SI'").then(trayectoriaPMC=>{  
                 //select de cargo
                 client.query("select * from educacion where edu_persona='"+cedula+"'").then(educacion=>{
                   //select de universidad
