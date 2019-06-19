@@ -32,7 +32,7 @@ head
                   select(name="cedula")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
                     -for (var i = 0; i < personas.rowCount; ++i)
-                      option=personas.rows[i].per_cedula
+                      option=personas.rows[i].per_cedula+' | '+personas.rows[i].per_nombre+' | '+personas.rows[i].per_apellido
                   .select-dropdown
               .p-t-15
 
@@ -54,6 +54,12 @@ head
               input.input--style-4(type='text' name='inf_per_descripcion' )
          
           button.btn.btn--radius-2.btn--blue(type='submit') Agregar
+          .row.row-space  
+            .text-center.p-t-136
+              a.txt2(href='/')
+                |Volver al Dashboard
+                i.fa.fa-long-arrow-right.m-l-5(aria-hidden='true')
+// Jquery JS
 // Jquery JS
 script(src='../public/vendor2/jquery/jquery.min.js')
 // Vendor JS

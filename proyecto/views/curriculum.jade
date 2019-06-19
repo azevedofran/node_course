@@ -22,7 +22,7 @@ head
   .wrapper.wrapper--w680
     .card.card-4
       .card-body
-        h2.title Curriculum
+        h2.title Personal
         form(action="/curriculum",method="POST")
           .row.row-space
             .col-2
@@ -36,28 +36,17 @@ head
                   .select-dropdown
             .col-1
               .p-t-15
-                 button.btn.btn--radius-2.btn--blue(type='Submit') Generar
+                 button.btn.btn--radius-2.btn--blue(type='Submit') Ver Sintesis
           .row.row-space
-            .col-2
-              -for (var i = 0; i < cuadros.rowCount; ++i)
-                  div
-                    table.table.table-striped
-                      thead
-                        tr: th C.I.
-                          th Nombres
-                          th  
-                          th Apellidos
-                          th  
-                          th Correo
-                        tbody
-                          tr
-                            td=cuadros.rows[i].per_cedula
-                            td=cuadros.rows[i].per_nombre
-                            td=cuadros.rows[i].per_nombre2
-                            td=cuadros.rows[i].per_apellido
-                            td=cuadros.rows[i].per_apellido2
-                            td=cuadros.rows[i].per_correo
-                    table.table
+              .col-3
+                -for (var i = 0; i < cuadros.rowCount; ++i)
+                  label.title(style="color: white") .
+                  strong
+                    label.label(style="b")=cuadros.rows[i].per_nombre+" "+cuadros.rows[i].per_apellido
+                  label.label="C.I.: "+cuadros.rows[i].per_cedula+" Estado Civil: "+cuadros.rows[i].per_edo_civil
+                  label.label="Correo: "+cuadros.rows[i].per_correo
+
+
              
 // Jquery JS
 script(src='../public/vendor2/jquery/jquery.min.js')

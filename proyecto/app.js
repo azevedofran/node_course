@@ -57,6 +57,14 @@ app.get("/educacion",function (req,res) {
   })
 });
 
+app.get("/apreciaciones",function (req,res) {
+  client.query("select * from persona").then(rows=>{
+    client.query("select * from persona").then(cuadro=>{
+        res.render("apreciaciones",{personas: rows,cuadros: cuadro})
+    })
+  })  
+});
+
 app.get("/apreciacion",function (req,res) {
   client.query("select per_cedula,per_nombre,per_apellido from persona").then(rows=>{
       res.render("apreciacion",{personas: rows})
@@ -70,6 +78,8 @@ app.get("/curriculum",function (req,res) {
     })
   })  
 });
+
+
 
 app.get("/trayectoria",function (req,res) {
   client.query("select * from CARGO").then(cargo=>{  
@@ -146,18 +156,23 @@ app.post("/persona", function(req,res,ret){
 app.post("/capacitacion", function(req,res,ret){
   var fecha = req.body.cap_fecha.split("/"); 
   var fecha_cap = fecha[2]+'-'+fecha[1]+'-'+fecha[0];
-  client.query("select ins_id from INSTITUCION where ins_nombre ='"+
-    req.body.cap_institucion+"'").then(institucion=>{ 
-   client.query("select per_cedula from PERSONA where per_cedula ='"+
-    req.body.cap_persona+"'").then(rows=>{
-      if(rows.rowCount >0){
-        client.query("insert into CAPACITACION values ($1, $2, $3, $4, $5, $6)", [req.body.cap_persona,institucion.rows[0].ins_id,req.body.cap_curso,req.body.cap_descripcion,fecha_cap,req.body.cap_horas]); 
-        res.send("capacitacion Fue Agregada");
-      }else{
-        res.send("La persona no existe");
-      }
-    })
-  })  
+  
+  if(req.body.cap_persona!=undefined){
+    var cedula=req.body.cap_persona.split(" | ",1)
+    
+    client.query("select ins_id from INSTITUCION where ins_nombre ='"+
+      req.body.cap_institucion+"'").then(institucion=>{ 
+     client.query("select per_cedula from PERSONA where per_cedula ='"+
+      cedula+"'").then(rows=>{
+        if(rows.rowCount >0){
+          client.query("insert into CAPACITACION values ($1, $2, $3, $4, $5, $6)", [parseInt(cedula),institucion.rows[0].ins_id,req.body.cap_curso,req.body.cap_descripcion,fecha_cap,req.body.cap_horas]); 
+          res.send("capacitacion Fue Agregada");
+        }else{
+          res.send("La persona no existe");
+        }
+      })
+    })  
+  }    
 })
 
 app.post("/educacion", function(req,res,ret){
@@ -186,39 +201,45 @@ app.post("/educacion", function(req,res,ret){
 
 
 app.post("/infpersona", function(req,res,ret){
-  client.query("select inf_id from INFORMACION where inf_tipo ='"+
-    req.body.inf_per_informacion+"'").then(informacion=>{ 
+  if(req.body.cedula!=undefined){
+    var cedula=req.body.cedula.split(" | ",1)  
+    client.query("select inf_id from INFORMACION where inf_tipo ='"+
+      req.body.inf_per_informacion+"'").then(informacion=>{ 
+     client.query("select per_cedula from PERSONA where per_cedula ='"+
+      cedula+"'").then(rows=>{
+        if(rows.rowCount >0){
+          client.query("insert into INFORMACION_PERSONA values ($1, $2, $3)", [parseInt(cedula),informacion.rows[0].inf_id,req.body.inf_per_descripcion]); 
+          res.send("Informacion Fue Agregada");
+        }else{
+          res.send("La persona no existe");
+        }
+      })
+    })
+  }    
+})
+
+app.post("/apreciacion", function(req,res,ret){
+  if(req.body.apr_persona!=undefined){
+    var cedula=req.body.apr_persona.split(" | ",1)   
    client.query("select per_cedula from PERSONA where per_cedula ='"+
-    req.body.cedula+"'").then(rows=>{
+    cedula+"'").then(rows=>{
       if(rows.rowCount >0){
-        client.query("insert into INFORMACION_PERSONA values ($1, $2, $3)", [req.body.cedula,informacion.rows[0].inf_id,req.body.inf_per_descripcion]); 
-        res.send("Informacion Fue Agregada");
+        client.query("select apr_periodo from APRECIACION where apr_persona='"+
+          cedula+"'and apr_periodo='"+req.body.apr_periodo+"'").then(cuenta=>{
+            if(cuenta.rowCount<=0){
+              client.query("insert into APRECIACION(apr_periodo,apr_solucion_problema,apr_conoce_negocio,apr_habilidad_social,apr_liderazgo,apr_auto_desarrollo,apr_auto_motivacion,apr_consolidado,apr_persona) values($1, $2, $3, $4, $5, $6, $7, $8, $9)",[req.body.apr_periodo,req.body.apr_solucion_problema,req.body.apr_conoce_negocio,req.body.apr_habilidad_social,req.body.apr_liderazgo,req.body.apr_auto_desarrollo,req.body.apr_auto_motivacion,req.body.apr_consolidado,parseInt(cedula)]);
+              res.send("Apreciacion Fue Agregada");  
+            }else{
+              res.send("Esta persona ya fue evaluada en ese periodo");
+            }
+            
+          })
+          
       }else{
         res.send("La persona no existe");
       }
     })
-  })  
-})
-
-app.post("/apreciacion", function(req,res,ret){
- client.query("select per_cedula from PERSONA where per_cedula ='"+
-  req.body.apr_persona+"'").then(rows=>{
-    if(rows.rowCount >0){
-      client.query("select apr_periodo from APRECIACION where apr_persona='"+
-        req.body.apr_persona+"'and apr_periodo='"+req.body.apr_periodo+"'").then(cuenta=>{
-          if(cuenta.rowCount<=0){
-            client.query("insert into APRECIACION(apr_periodo,apr_solucion_problema,apr_conoce_negocio,apr_habilidad_social,apr_liderazgo,apr_auto_desarrollo,apr_auto_motivacion,apr_consolidado,apr_persona) values($1, $2, $3, $4, $5, $6, $7, $8, $9)",[req.body.apr_periodo,req.body.apr_solucion_problema,req.body.apr_conoce_negocio,req.body.apr_habilidad_social,req.body.apr_liderazgo,req.body.apr_auto_desarrollo,req.body.apr_auto_motivacion,req.body.apr_consolidado,req.body.apr_persona]);
-            res.send("Apreciacion Fue Agregada");  
-          }else{
-            res.send("Esta persona ya fue evaluada en ese periodo");
-          }
-          
-        })
-        
-    }else{
-      res.send("La persona no existe");
-    }
-  })
+  }  
 })
 
 app.post("/trayectoria", function(req,res,ret){
@@ -231,11 +252,13 @@ app.post("/trayectoria", function(req,res,ret){
  }else{
    var fecha_cap_fin =null;
  }
-
-  client.query("select car_id from CARGO where car_cargo='"+req.body.tra_cargo+"'").then(cargo=>{
-    client.query("insert into TRAYECTORIA(tra_cargo,tra_persona,tra_pmc,tra_tipo_trabajo,tra_empresa,tra_fecha_inicio,tra_fecha_fin) values ($1,$2,$3,$4,$5,$6,$7)",[cargo.rows[0].car_id,req.body.tra_persona,req.body.tra_pmc,req.body.tra_tipo_trabajo,req.body.tra_empresa,fecha_cap,fecha_cap_fin])
-  res.send("El trabajo fue agregado a la trayectoria sin problemas");
-  })
+  if(req.body.tra_persona!=undefined){
+    var cedula=req.body.tra_persona.split(" | ",1)
+    client.query("select car_id from CARGO where car_cargo='"+req.body.tra_cargo+"'").then(cargo=>{
+      client.query("insert into TRAYECTORIA(tra_cargo,tra_persona,tra_pmc,tra_tipo_trabajo,tra_empresa,tra_fecha_inicio,tra_fecha_fin) values ($1,$2,$3,$4,$5,$6,$7)",[cargo.rows[0].car_id,parseInt(cedula),req.body.tra_pmc,req.body.tra_tipo_trabajo,req.body.tra_empresa,fecha_cap,fecha_cap_fin])
+    res.send("El trabajo fue agregado a la trayectoria sin problemas");
+    })
+  }
 })
 
 
@@ -246,13 +269,11 @@ app.post("/curriculum",function (req,res,ret) {
        client.query("select tel_cod_area,tel_numero,tel_tipo from telefono where tel_persona='"+cedula+"'").then(telefono=>{
         client.query("select inf_tipo,inf_per_descripcion from informacion,informacion_persona where inf_per_persona='"+cedula+"' and inf_per_informacion=inf_id").then(informacion=>{
           client.query("select cap_curso,ins_nombre,cap_fecha,cap_horas from capacitacion,institucion where cap_persona='"+cedula+"'and ins_id=cap_institucion").then(capacitacion=>{      
-            //aca va el select de institucion
             client.query("select tra_empresa,tra_fecha_inicio,tra_fecha_fin,car_cargo from trayectoria,cargo where car_id=tra_cargo and tra_persona='"+cedula+"'and tra_pmc='NO'").then(trayectoriaEXT=>{      
-              //Select de cargo
               client.query("select tra_empresa,tra_fecha_inicio,car_cargo from trayectoria,cargo where car_id=tra_cargo and tra_persona='"+cedula+"'and tra_pmc='SI'").then(trayectoriaPMC=>{  
-                //select de cargo
-                client.query("select * from educacion where edu_persona='"+cedula+"'").then(educacion=>{
-                  //select de universidad
+                
+                client.query("select uni_nombre,edu_tipo,edu_carrera,edu_fecha_inicio,edu_fecha_fin from educacion,universidad where edu_persona='"+cedula+"' and edu_universidad=uni_id").then(educacion=>{
+                  
                   client.query("select * from persona").then(rows=>{
                     client.query("select per_cedula,per_nombre,per_nombre2,per_apellido,per_apellido2,per_fecha_nacimiento,per_edo_civil,per_correo,pro_profesion,tel_cod_area,tel_numero,tel_tipo from telefono,profesion,persona where per_profesion=pro_id and per_cedula='"+cedula+"' and tel_persona='"+cedula+"'").then(cuadro=>{
                         res.render("curriculum2",{personas: rows,cuadros: cuadro, educaciones: educacion, trayActual: trayectoriaPMC, trayAnterior: trayectoriaEXT, capacitaciones: capacitacion, informaciones: informacion, telefonos: telefono})
@@ -275,5 +296,18 @@ app.post("/curriculum",function (req,res,ret) {
   
   
 });
+
+app.post("/apreciaciones",function (req,res,ret) {
+  if(req.body.cedula!=undefined){
+    var cedula=req.body.cedula.split(" | ",1)
+    client.query("select * from persona").then(cuadro=>{
+      client.query("select * from apreciacion where apr_persona='"+cedula+"'").then(apreciacion=>{  
+        client.query("select per_cedula,per_nombre,per_nombre2,per_apellido,per_apellido2 from persona where per_cedula='"+cedula+"'").then(persona=>{
+          res.render("apreciaciones2",{cuadros:cuadro,personas: persona,apreciaciones:apreciacion})
+        })
+      })
+    })    
+  }
+})
 
 app.listen(8080);

@@ -58,7 +58,7 @@ head
             .col-2
             label.title Educacion Formal
               -for (var i = 0; i < educaciones.rowCount; ++i)
-                label.label="Universidad: "+educaciones.rows[i].edu_universidad
+                label.label="Universidad: "+educaciones.rows[i].uni_nombre
                 label.label="Tipo Carrera: "+educaciones.rows[i].edu_tipo
                 label.label="Carrera: "+educaciones.rows[i].edu_carrera
                 label.label="Fecha de Inicio: "+educaciones.rows[i].edu_fecha_inicio
@@ -70,12 +70,12 @@ head
             label.title Trayectoria Laboral en PMC
               -for (var i = 0; i < trayActual.rowCount; ++i)
                 label.label="Empresa: "+trayActual.rows[i].tra_empresa
-                label.label="Fecha de Ingreso: "+trayActual.rows[i].tra_fecha_inicio
+                label.label.date('dd/mm/yyyy')="Fecha de Ingreso: "+trayActual.rows[i].tra_fecha_inicio
                 label.label="Cargo: "+trayActual.rows[i].car_cargo                
 
           .row.row-space
             .col-2
-            label.title Trayectoria Laboral Anterior
+            label.title Trayectoria Laboral Exterior
               -for (var i = 0; i < trayAnterior.rowCount; ++i)
                 label.label="Empresa: "+trayAnterior.rows[i].tra_empresa
                 label.label="Fecha de Ingreso: "+trayAnterior.rows[i].tra_fecha_inicio
@@ -91,15 +91,17 @@ head
                 label.label="Institucion: "+capacitaciones.rows[i].ins_nombre
                 label.label="Fecha: "+capacitaciones.rows[i].cap_fecha
                 label.label="Duracion: "+capacitaciones.rows[i].cap_horas+"horas"
-
-                  
           .row.row-space
-            .col-2
+         
             label.title Informacion de Interes
               -for (var i = 0; i < informaciones.rowCount; ++i)
                 label.label="Tipo: "+informaciones.rows[i].inf_tipo
                 label.label="Informacion: "+informaciones.rows[i].inf_per_descripcion
-               
+          .row.row-space  
+              .text-center.p-t-136
+                a.txt2(href='/')
+                  |Volver al Dashboard
+                  i.fa.fa-long-arrow-right.m-l-5(aria-hidden='true') 
              
 // Jquery JS
 script(src='../public/vendor2/jquery/jquery.min.js')
