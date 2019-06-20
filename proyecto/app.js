@@ -152,9 +152,11 @@ app.post("/persona", function(req,res,ret){
         client.query("insert into PERSONA values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [req.body.per_cedula,req.body.per_nombre,nombre2,req.body.per_apellido,apellido2,fecha_nac,req.body.per_edo_civil,req.body.per_correo,req.body.per_genero,profesion.rows[0].pro_id]); 
         client.query("insert into TELEFONO(tel_cod_area,tel_numero,tel_tipo,tel_persona) values($1,$2,$3,$4)",[req.body.tel_cod_area,req.body.tel_numero,req.body.tel_tipo,req.body.per_cedula])
         client.query("insert into direccion(dir_direccion,dir_persona) values($1,$2)",[req.body.per_direccion,req.body.per_cedula])
-        res.send("Persona Fue Agregada");
+        var mensaje="La persona fue agregada exitosamente";
+        res.render('index',{mensajes:mensaje});
       } else{
-        res.send("Persona Ya Existe");
+        var mensaje="La persona ya existe";
+        res.render('index',{mensajes:mensaje});
       }
     })
   })
@@ -173,7 +175,8 @@ app.post("/capacitacion", function(req,res,ret){
       cedula+"'").then(rows=>{
         if(rows.rowCount >0){
           client.query("insert into CAPACITACION values ($1, $2, $3, $4, $5, $6)", [parseInt(cedula),institucion.rows[0].ins_id,req.body.cap_curso,req.body.cap_descripcion,fecha_cap,req.body.cap_horas]); 
-          res.send("capacitacion Fue Agregada");
+          var mensaje="La capacitacion fue agregada exitosamente";
+          res.render('index',{mensajes:mensaje});
         }else{
           res.send("La persona no existe");
         }
@@ -197,7 +200,9 @@ app.post("/educacion", function(req,res,ret){
       cedula+"'").then(rows=>{
         if(rows.rowCount >0){
           client.query("insert into EDUCACION(edu_persona,edu_universidad,edu_tipo,edu_carrera,edu_fecha_inicio,edu_fecha_fin) values ($1, $2, $3, $4, $5, $6)", [parseInt(cedula),universidad.rows[0].uni_id,req.body.cap_curso,req.body.cap_descripcion,fecha_cap,fecha_cap_fin]); 
-          res.send("Educacion Fue Agregada");
+          var mensaje="Los datos de Educacion Fueron agregados exitosamente";
+          res.render('index',{mensajes:mensaje});
+          
         }else{
           res.send("La persona no existe");
         }
@@ -216,7 +221,8 @@ app.post("/infpersona", function(req,res,ret){
       cedula+"'").then(rows=>{
         if(rows.rowCount >0){
           client.query("insert into INFORMACION_PERSONA values ($1, $2, $3)", [parseInt(cedula),informacion.rows[0].inf_id,req.body.inf_per_descripcion]); 
-          res.send("Informacion Fue Agregada");
+          var mensaje="Informacion de importancia fue agregada exitosamente";
+          res.render('index',{mensajes:mensaje});
         }else{
           res.send("La persona no existe");
         }
@@ -235,9 +241,12 @@ app.post("/apreciacion", function(req,res,ret){
           cedula+"'and apr_periodo='"+req.body.apr_periodo+"'").then(cuenta=>{
             if(cuenta.rowCount<=0){
               client.query("insert into APRECIACION(apr_periodo,apr_solucion_problema,apr_conoce_negocio,apr_habilidad_social,apr_liderazgo,apr_auto_desarrollo,apr_auto_motivacion,apr_consolidado,apr_persona) values($1, $2, $3, $4, $5, $6, $7, $8, $9)",[req.body.apr_periodo,req.body.apr_solucion_problema,req.body.apr_conoce_negocio,req.body.apr_habilidad_social,req.body.apr_liderazgo,req.body.apr_auto_desarrollo,req.body.apr_auto_motivacion,req.body.apr_consolidado,parseInt(cedula)]);
-              res.send("Apreciacion Fue Agregada");  
+              var mensaje="La apreciacion para el periodo fue agregada exitosamente";
+              res.render('index',{mensajes:mensaje});
+                
             }else{
-              res.send("Esta persona ya fue evaluada en ese periodo");
+              var mensaje="Esta persona ya fue evaluada en ese periodo";
+              res.render('index',{mensajes:mensaje});
             }
             
           })
@@ -376,7 +385,8 @@ app.post("/modificarPersona",function(req,res,ret){
     client.query("insert into TELEFONO(tel_cod_area,tel_numero,tel_tipo,tel_persona) values($1,$2,$3,$4)",[req.body.tel_cod_area,req.body.tel_numero,req.body.tel_tipo,cedula])   
     }*/
     client.query("UPDATE direccion SET dir_direccion ='"+req.body.per_direccion+"' WHERE dir_persona ='"+cedula+"'")
-    res.render("index")
+    var mensaje="Los datos fueuron modificados exitosamente";
+    res.render('index',{mensajes:mensaje});
 
   })
 })
