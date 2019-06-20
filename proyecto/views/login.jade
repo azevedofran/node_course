@@ -28,6 +28,8 @@ head
       form(action="/usersLogin",method="POST").login100-form.validate-form
         span.login100-form-title
           | Bienvenido
+        if(mensajes!=null && mensajes!=undefined)
+            label(style='color:red')=mensajes
         .wrap-input100.validate-input(data-validate='Valid email is required: ex@abc.xyz')
           input.input100(type='text' name='usuario' placeholder='Usuario')
           span.focus-input100

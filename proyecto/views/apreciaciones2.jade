@@ -8,6 +8,9 @@ head
   meta(name='keywords' content='Colorlib Templates')
   // Title Page
   title Inf. de Interes
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+
   // Icons font CSS
   link(href='../public/vendor2/mdi-font/css/material-design-iconic-font.min.css' rel='stylesheet' media='all')
   link(href='../public/vendor2/font-awesome-4.7/css/font-awesome.min.css' rel='stylesheet' media='all')
@@ -18,11 +21,37 @@ head
   link(href='../public/vendor2/datepicker/daterangepicker.css' rel='stylesheet' media='all')
   // Main CSS
   link(href='../public/css/main2.css' rel='stylesheet' media='all')
+ 
+form
+  nav.navbar.navbar-inverse(style='margin-bottom: 0px')
+    .container-fluid
+      .navbar-header
+        a.navbar-brand(href='/') CEPSA
+      ul.nav.navbar-nav
+        li
+          a(href="/") Home
+        li  
+          a(href="/persona") Persona
+        li
+          a(href="/capacitacion") Capacitacion
+        li
+          a(href="/infpersona") Informacion de Interes
+        li
+          a(href="/educacion") Educacion
+        li
+          a(href="/apreciacion") Apreciacion
+        li
+         a(href="/trayectoria") Trayectoria
+        li
+         a(href="/curriculum") Curriculum
+        li.active
+         a(href="/apreciaciones") Apreciaciones
+
 .page-wrapper.bg-gra-02.p-t-130.p-b-100.font-poppins
   .wrapper.wrapper--w680
     .card.card-4(style='width:110%;')
       .card-body
-        h2.title Apreciacion
+        h2.title(style='text-align: center; font-size:35px !important') Apreciacion
         form(action="/apreciaciones",method="POST")
           .row.row-space
             .col-2
@@ -40,28 +69,28 @@ head
                  button.btn.btn--radius-2.btn--blue(type='Submit') Generar
  
             .row.row-space
-              .col-2
-              label.title Informacion Personal
+              .col-6
+                h1.title(style='margin-top: 5%;font-size:35px !important') Informacion Personal
                 -for (var i = 0; i < personas.rowCount; ++i)
                   if(personas.rows[i].per_nombre2=null)
                      var segNombre="."
                   if(personas.rows[i].per_apellido2=null)
                      var segApellido="."  
                   label.label="Nombres y Apellidos: "+personas.rows[i].per_nombre+" "+segNombre+" "+personas.rows[i].per_apellido+" "+segApellido
-                  label.label="C.I.: "+personas.rows[i].per_cedula
-                  label.label="Correo: "+personas.rows[i].per_correo
-                  label.label="Profesion: "+personas.rows[i].pro_profesion
-                  
+                  label(style='text-align: left').label="C.I.: "+personas.rows[i].per_cedula
+                  label(style='text-align: left').label="Correo: "+personas.rows[i].per_correo
+                  label(style='text-align: left').label="Profesion: "+personas.rows[i].pro_profesion
+            br      
             .row.row-space
-              .col-2
-              label.title Apreciacion
+              .col-6
+                h1.title(style='margin-top: 15%;font-size:35px !important') Apreciacion
                 -for (var i = 0; i < apreciaciones.rowCount; ++i)
-                  strong 
-                    label.label="Periodo: "+apreciaciones.rows[i].apr_periodo
-                  label.label="Solucionar Problemas: "+apreciaciones.rows[i].apr_solucion_problema
-                  label.label="Conocimiento del Negocio: "+apreciaciones.rows[i].apr_conoce_negocio
-                  label.label="Habilidad Social: "+apreciaciones.rows[i].apr_habilidad_social
-                  label.label="Liderazgo: "+apreciaciones.rows[i].apr_liderazgo
-                  label.label="Autodesarrollo: "+apreciaciones.rows[i].apr_auto_desarrollo
-                  label.label="Automotivacion: "+apreciaciones.rows[i].apr_auto_motivacion
-                  label.label="Consolidado: "+apreciaciones.rows[i].apr_consolidado
+                
+                  label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de;').label="Periodo: "+apreciaciones.rows[i].apr_periodo
+                  label(style='text-align: left; margin-left:10%').label="Solucionar Problemas: "+apreciaciones.rows[i].apr_solucion_problema
+                  label(style='text-align: left; margin-left:10%').label="Conocimiento del Negocio: "+apreciaciones.rows[i].apr_conoce_negocio
+                  label(style='text-align: left; margin-left:10%').label="Habilidad Social: "+apreciaciones.rows[i].apr_habilidad_social
+                  label(style='text-align: left; margin-left:10%').label="Liderazgo: "+apreciaciones.rows[i].apr_liderazgo
+                  label(style='text-align: left; margin-left:10%').label="Autodesarrollo: "+apreciaciones.rows[i].apr_auto_desarrollo
+                  label(style='text-align: left; margin-left:10%').label="Automotivacion: "+apreciaciones.rows[i].apr_auto_motivacion
+                  label(style='text-align: left; margin-left:10%').label="Consolidado: "+apreciaciones.rows[i].apr_consolidado

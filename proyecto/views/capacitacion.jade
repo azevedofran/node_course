@@ -7,7 +7,10 @@ head
   meta(name='author' content='Colorlib')
   meta(name='keywords' content='Colorlib Templates')
   // Title Page
-  title Capacitacion
+  title Inf. de Interes
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+
   // Icons font CSS
   link(href='../public/vendor2/mdi-font/css/material-design-iconic-font.min.css' rel='stylesheet' media='all')
   link(href='../public/vendor2/font-awesome-4.7/css/font-awesome.min.css' rel='stylesheet' media='all')
@@ -18,6 +21,31 @@ head
   link(href='../public/vendor2/datepicker/daterangepicker.css' rel='stylesheet' media='all')
   // Main CSS
   link(href='../public/css/main2.css' rel='stylesheet' media='all')
+ 
+form
+  nav.navbar.navbar-inverse(style='margin-bottom: 0px')
+    .container-fluid
+      .navbar-header
+        a.navbar-brand(href='/') CEPSA
+      ul.nav.navbar-nav
+        li
+          a(href="/") Home
+        li  
+          a(href="/persona") Persona
+        li.active
+          a(href="/capacitacion") Capacitacion
+        li
+          a(href="/infpersona") Informacion de Interes
+        li
+          a(href="/educacion") Educacion
+        li
+          a(href="/apreciacion") Apreciacion
+        li
+         a(href="/trayectoria") Trayectoria
+        li
+         a(href="/curriculum") Curriculum
+        li 
+         a(href="/apreciaciones") Apreciaciones
 .page-wrapper.bg-gra-02.p-t-130.p-b-100.font-poppins
   .wrapper.wrapper--w680
     .card.card-4

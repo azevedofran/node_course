@@ -110,11 +110,14 @@ app.post("/users", function(req,res,ret){
       client.query("insert into USUARIOS values ($1, $2)", [req.body.usuario,req.body.password]);
       console.log("Password: "+ req.body.password);
       console.log("Usuario: "+ req.body.usuario);
-      res.render('login');
+      var mensaje="El usuario fue agregado exitosamente";
+      res.render('index',{mensajes:mensaje});
     }else if (req.body.password != req.body.password_confirmation){
-      res.send("El password indicado no esta bien");
+      var mensaje="El Password y la confirmacion deben coincidir";
+      res.render('index',{mensajes:mensaje});
     }else if (rows.rowCount>0){
-      res.send("El usuario ya existe");
+      var mensaje="El usuario ya existe";
+      res.render('index',{mensajes:mensaje});
     }
   })
 })
@@ -125,13 +128,10 @@ app.post("/usersLogin", function(req,res,ret){
   req.body.usuario+"'").then(rows=>{
       var consulta = rows.rows[0].usu_contrasena;
       if (consulta == req.body.password){
-            console.log("entro1 al query");
-
         res.render('index');
       }else if (consulta!=req.body.password){
-            console.log("entro 22al query");
-
-        res.send("Usuario o Contrasena invalido");
+        var mensaje="El usuario o el password es incorrecto"
+        res.render('login',{mensajes:mensaje})
       }
   })
 })
@@ -259,12 +259,17 @@ app.post("/trayectoria", function(req,res,ret){
  }else{
    var fecha_cap_fin =null;
  }
-  if(req.body.tra_persona!=undefined){
+  if(req.body.tra_persona!=undefined && req.body.tra_persona!=null){
+    console.log(req.body.tra_tipo_trabajo)
     var cedula=req.body.tra_persona.split(" | ",1)
     client.query("select car_id from CARGO where car_cargo='"+req.body.tra_cargo+"'").then(cargo=>{
       client.query("insert into TRAYECTORIA(tra_cargo,tra_persona,tra_pmc,tra_tipo_trabajo,tra_empresa,tra_fecha_inicio,tra_fecha_fin) values ($1,$2,$3,$4,$5,$6,$7)",[cargo.rows[0].car_id,parseInt(cedula),req.body.tra_pmc,req.body.tra_tipo_trabajo,req.body.tra_empresa,fecha_cap,fecha_cap_fin])
-    res.send("El trabajo fue agregado a la trayectoria sin problemas");
+      var mensaje="La trayectoria fue agregada con Exito";
+      res.render('index',{mensajes:mensaje});
     })
+  }else{
+    var mensaje="La trayectoria no fue agregada debe ingresar todos los datos";
+      res.render('index',{mensajes:mensaje});
   }
 })
 
@@ -320,7 +325,7 @@ app.post("/apreciaciones",function (req,res,ret) {
 app.post("/verPersona",function(req,res,ret){
   if(req.body.apr_persona!=undefined){
     var cedula=req.body.apr_persona.split(" | ",1)  
-    client.query("select * from persona,profesion,direccion,telefono where per_profesion=pro_id and per_cedula='"+cedula+"' and tel_persona='"+cedula+"'").then(seleccion=>{
+    client.query("select * from persona,profesion,direccion,telefono where per_profesion=pro_id and per_cedula='"+cedula+"' and tel_persona='"+cedula+"' and dir_persona='"+cedula+"'").then(seleccion=>{
       client.query("select * from persona").then(rows=>{
         client.query("select * from PROFESION").then(profesion=>{
          res.render("persona2",{profesiones: profesion,personas:rows,selecciones: seleccion})
@@ -362,10 +367,17 @@ app.post("/modificarPersona",function(req,res,ret){
     client.query("UPDATE persona SET per_nombre2 ='"+nombre2+"' WHERE per_cedula ='"+cedula+"'")
     client.query("UPDATE persona SET per_apellido ='"+req.body.per_apellido+"' WHERE per_cedula ='"+cedula+"'")
     client.query("UPDATE persona SET per_apellido2 ='"+apellido2+"' WHERE per_cedula ='"+cedula+"'")
-   
-    //per_fecha_nacimiento=#{fecha_nac},per_edo_civil=#{req.body.per_edo_civil},per_correo=#{req.body.per_correo},per_genero=#{req.body.per_genero},per_profesion=#(per_profesion.rows[0].pro_id) WHERE per_cedula=#{cedula}")
-    
-    res.send("se modifico el usuario")
+    client.query("UPDATE persona SET per_fecha_nacimiento ='"+fecha_nac+"' WHERE per_cedula ='"+cedula+"'")
+    client.query("UPDATE persona SET per_edo_civil ='"+req.body.per_edo_civil+"' WHERE per_cedula ='"+cedula+"'")
+    client.query("UPDATE persona SET per_correo ='"+req.body.per_correo+"' WHERE per_cedula ='"+cedula+"'")
+    client.query("UPDATE persona SET per_genero ='"+req.body.per_genero+"' WHERE per_cedula ='"+cedula+"'")
+    //client.query("UPDATE persona SET per_profesion ='"+per_profesion.rows[0]+"' WHERE per_cedula ='"+cedula+"'")
+   /*if(req.body.tel_numero!='' && req.body.tel_cod_area!='' && req.body.tel_tipo!=''){
+    client.query("insert into TELEFONO(tel_cod_area,tel_numero,tel_tipo,tel_persona) values($1,$2,$3,$4)",[req.body.tel_cod_area,req.body.tel_numero,req.body.tel_tipo,cedula])   
+    }*/
+    client.query("UPDATE direccion SET dir_direccion ='"+req.body.per_direccion+"' WHERE dir_persona ='"+cedula+"'")
+    res.render("index")
+
   })
 })
 

@@ -8,6 +8,9 @@ head
   meta(name='keywords' content='Colorlib Templates')
   // Title Page
   title Inf. de Interes
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+
   // Icons font CSS
   link(href='../public/vendor2/mdi-font/css/material-design-iconic-font.min.css' rel='stylesheet' media='all')
   link(href='../public/vendor2/font-awesome-4.7/css/font-awesome.min.css' rel='stylesheet' media='all')
@@ -18,6 +21,31 @@ head
   link(href='../public/vendor2/datepicker/daterangepicker.css' rel='stylesheet' media='all')
   // Main CSS
   link(href='../public/css/main2.css' rel='stylesheet' media='all')
+ 
+form
+  nav.navbar.navbar-inverse(style='margin-bottom: 0px')
+    .container-fluid
+      .navbar-header
+        a.navbar-brand(href='/') CEPSA
+      ul.nav.navbar-nav
+        li
+          a(href="/") Home
+        li  
+          a(href="/persona") Persona
+        li
+          a(href="/capacitacion") Capacitacion
+        li
+          a(href="/infpersona") Informacion de Interes
+        li
+          a(href="/educacion") Educacion
+        li
+          a(href="/apreciacion") Apreciacion
+        li
+         a(href="/trayectoria") Trayectoria
+        li.active
+         a(href="/curriculum") Curriculum
+        li 
+         a(href="/apreciaciones") Apreciaciones
 .page-wrapper.bg-gra-02.p-t-130.p-b-100.font-poppins
   .wrapper.wrapper--w680
     .card.card-4(style='width:110%;')
@@ -38,66 +66,63 @@ head
               .p-t-15
                  button.btn.btn--radius-2.btn--blue(type='Submit') Generar
  
-            .row.row-space
-              .col-2
-              label.title Informacion Personal
-                -for (var i = 0; i < cuadros.rowCount; ++i)
-                  if(cuadros.rows[i].per_nombre2=null)
-                     var segNombre="."
-                  if(cuadros.rows[i].per_apellido2=null)
-                     var segApellido="."  
-                  label.label="Nombres y Apellidos: "+cuadros.rows[i].per_nombre+" "+segNombre+" "+cuadros.rows[i].per_apellido+" "+segApellido
-                  label.label="C.I.: "+cuadros.rows[i].per_cedula+" Estado Civil: "+cuadros.rows[i].per_edo_civil
-                  label.label="Correo: "+cuadros.rows[i].per_correo
-                  label.label="Fecha de Nacimiento: "+cuadros.rows[i].per_fecha_nacimiento.toLocaleString("en-GB").split(",",1)
-                  label.label="Profesion: "+cuadros.rows[i].pro_profesion
-                  -for (var i = 0; i < telefonos.rowCount; ++i)
-                    label.label="Telefono: ("+telefonos.rows[i].tel_cod_area+") "+telefonos.rows[i].tel_numero+" "+telefonos.rows[i].tel_tipo
+          .row.row-space
+            .col-6
+            label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de; width:100%').label Informacion Personal
+            -for (var i = 0; i < cuadros.rowCount; ++i)
+              label(style='text-align: left; margin-left:5%').label="Nombres y Apellidos: "+cuadros.rows[i].per_nombre+" "+cuadros.rows[i].per_apellido
+              label(style='text-align: left; margin-left:5%').label="C.I.: "+cuadros.rows[i].per_cedula
+              label(style='text-align: left; margin-left:5%').label="Estado Civil: "+cuadros.rows[i].per_edo_civil
+              label(style='text-align: left; margin-left:5%').label="Correo: "+cuadros.rows[i].per_correo
+              label(style='text-align: left; margin-left:5%').label="Fecha de Nacimiento: "+cuadros.rows[i].per_fecha_nacimiento.toLocaleString("en-GB").split(",",1)
+              label(style='text-align: left; margin-left:5%').label="Profesion: "+cuadros.rows[i].pro_profesion
+              -for (var i = 0; i < telefonos.rowCount; ++i)
+                label(style='text-align: left; margin-left:5%').label="Telefono: ("+telefonos.rows[i].tel_cod_area+") "+telefonos.rows[i].tel_numero+" "+telefonos.rows[i].tel_tipo
 
           .row.row-space
-            .col-2
-            label.title Educacion Formal
-              -for (var i = 0; i < educaciones.rowCount; ++i)
-                label.label="Universidad: "+educaciones.rows[i].uni_nombre
-                label.label="Tipo Carrera: "+educaciones.rows[i].edu_tipo
-                label.label="Carrera: "+educaciones.rows[i].edu_carrera
-                label.label="Fecha de Inicio: "+educaciones.rows[i].edu_fecha_inicio.toLocaleString("en-GB").split(",",1)
-                label.label="Fecha de Finalizacion: "+educaciones.rows[i].edu_fecha_fin.toLocaleString("en-GB").split(",",1)
+            .col-6
+            label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de; width:100%;').label Educacion Formal
+            -for (var i = 0; i < educaciones.rowCount; ++i)
+              label(style='text-align: left; margin-left:5%').label="Universidad: "+educaciones.rows[i].uni_nombre
+              label(style='text-align: left; margin-left:5%').label="Tipo Carrera: "+educaciones.rows[i].edu_tipo
+              label(style='text-align: left; margin-left:5%').label="Carrera: "+educaciones.rows[i].edu_carrera
+              label(style='text-align: left; margin-left:5%').label="Fecha de Inicio: "+educaciones.rows[i].edu_fecha_inicio.toLocaleString("en-GB").split(",",1)
+              label(style='text-align: left; margin-left:5%').label="Fecha de Finalizacion: "+educaciones.rows[i].edu_fecha_fin.toLocaleString("en-GB").split(",",1)
               
 
           .row.row-space
             .col-2
-            label.title Trayectoria Laboral en PMC
-              -for (var i = 0; i < trayActual.rowCount; ++i)
-                label.label="Empresa: "+trayActual.rows[i].tra_empresa
-                label.label="Fecha de Ingreso: "+trayActual.rows[i].tra_fecha_inicio.toLocaleString("en-GB").split(",",1)
-                label.label="Cargo: "+trayActual.rows[i].car_cargo                
+            label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de; width:100%').label Trayectoria Laboral en PMC
+            -for (var i = 0; i < trayActual.rowCount; ++i)
+              label(style='text-align: left; margin-left:5%').label="Empresa: "+trayActual.rows[i].tra_empresa
+              label(style='text-align: left; margin-left:5%').label="Fecha de Ingreso: "+trayActual.rows[i].tra_fecha_inicio.toLocaleString("en-GB").split(",",1)
+              label(style='text-align: left; margin-left:5%').label="Cargo: "+trayActual.rows[i].car_cargo                
 
           .row.row-space
             .col-2
-            label.title Trayectoria Laboral Exterior
-              -for (var i = 0; i < trayAnterior.rowCount; ++i)
-                label.label="Empresa: "+trayAnterior.rows[i].tra_empresa
-                label.label="Fecha de Ingreso: "+trayAnterior.rows[i].tra_fecha_inicio.toLocaleString("en-GB").split(",",1)
-                if(trayAnterior.rows[i].tra_fecha_fin!=null)
-                  label.label="Fecha de Egreso: "+trayAnterior.rows[i].tra_fecha_fin.toLocaleString("en-GB").split(",",1)
-                label.label="Cargo: "+trayAnterior.rows[i].car_cargo
+            label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de; width:100%').label Trayectoria Laboral Exterior
+            -for (var i = 0; i < trayAnterior.rowCount; ++i)
+              label(style='text-align: left; margin-left:5%').label="Empresa: "+trayAnterior.rows[i].tra_empresa
+              label(style='text-align: left; margin-left:5%').label="Fecha de Ingreso: "+trayAnterior.rows[i].tra_fecha_inicio.toLocaleString("en-GB").split(",",1)
+              if(trayAnterior.rows[i].tra_fecha_fin!=null)
+                label(style='text-align: left; margin-left:5%').label="Fecha de Egreso: "+trayAnterior.rows[i].tra_fecha_fin.toLocaleString("en-GB").split(",",1)
+              label(style='text-align: left; margin-left:5%').label="Cargo: "+trayAnterior.rows[i].car_cargo
                    
 
           .row.row-space
             .col-2
-            label.title Capacitacion Recibida
-              -for (var i = 0; i < capacitaciones.rowCount; ++i)
-                label.label="Curso: "+capacitaciones.rows[i].cap_curso
-                label.label="Institucion: "+capacitaciones.rows[i].ins_nombre
-                label.label="Fecha: "+capacitaciones.rows[i].cap_fecha.toLocaleString("en-GB").split(",",1)
-                label.label="Duracion: "+capacitaciones.rows[i].cap_horas+"horas"
+            label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de; width:100%').label Capacitacion Recibida
+            -for (var i = 0; i < capacitaciones.rowCount; ++i)
+              label(style='text-align: left; margin-left:5%').label="Curso: "+capacitaciones.rows[i].cap_curso
+              label(style='text-align: left; margin-left:5%').label="Institucion: "+capacitaciones.rows[i].ins_nombre
+              label(style='text-align: left; margin-left:5%').label="Fecha: "+capacitaciones.rows[i].cap_fecha.toLocaleString("en-GB").split(",",1)
+              label(style='text-align: left; margin-left:5%').label="Duracion: "+capacitaciones.rows[i].cap_horas+"horas"
           .row.row-space
-         
-            label.title Informacion de Interes
-              -for (var i = 0; i < informaciones.rowCount; ++i)
-                label.label="Tipo: "+informaciones.rows[i].inf_tipo
-                label.label="Informacion: "+informaciones.rows[i].inf_per_descripcion
+            .col-2
+            label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de; width:100%').label Informacion de Interes
+            -for (var i = 0; i < informaciones.rowCount; ++i)
+              label(style='text-align: left; margin-left:5%').label="Tipo: "+informaciones.rows[i].inf_tipo
+              label(style='text-align: left; margin-left:5%').label="Informacion: "+informaciones.rows[i].inf_per_descripcion
           .row.row-space  
               .text-center.p-t-136
                 a.txt2(href='/')
