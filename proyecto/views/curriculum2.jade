@@ -49,7 +49,7 @@ head
                   label.label="Nombres y Apellidos: "+cuadros.rows[i].per_nombre+" "+segNombre+" "+cuadros.rows[i].per_apellido+" "+segApellido
                   label.label="C.I.: "+cuadros.rows[i].per_cedula+" Estado Civil: "+cuadros.rows[i].per_edo_civil
                   label.label="Correo: "+cuadros.rows[i].per_correo
-                  label.label="Fecha de Nacimiento: "+cuadros.rows[i].per_fecha_nacimiento
+                  label.label="Fecha de Nacimiento: "+cuadros.rows[i].per_fecha_nacimiento.toLocaleString("en-GB").split(",",1)
                   label.label="Profesion: "+cuadros.rows[i].pro_profesion
                   -for (var i = 0; i < telefonos.rowCount; ++i)
                     label.label="Telefono: ("+telefonos.rows[i].tel_cod_area+") "+telefonos.rows[i].tel_numero+" "+telefonos.rows[i].tel_tipo
@@ -61,8 +61,8 @@ head
                 label.label="Universidad: "+educaciones.rows[i].uni_nombre
                 label.label="Tipo Carrera: "+educaciones.rows[i].edu_tipo
                 label.label="Carrera: "+educaciones.rows[i].edu_carrera
-                label.label="Fecha de Inicio: "+educaciones.rows[i].edu_fecha_inicio
-                label.label="Fecha de Finalizacion: "+educaciones.rows[i].edu_fecha_inicio
+                label.label="Fecha de Inicio: "+educaciones.rows[i].edu_fecha_inicio.toLocaleString("en-GB").split(",",1)
+                label.label="Fecha de Finalizacion: "+educaciones.rows[i].edu_fecha_fin.toLocaleString("en-GB").split(",",1)
               
 
           .row.row-space
@@ -70,7 +70,7 @@ head
             label.title Trayectoria Laboral en PMC
               -for (var i = 0; i < trayActual.rowCount; ++i)
                 label.label="Empresa: "+trayActual.rows[i].tra_empresa
-                label.label.date('dd/mm/yyyy')="Fecha de Ingreso: "+trayActual.rows[i].tra_fecha_inicio
+                label.label="Fecha de Ingreso: "+trayActual.rows[i].tra_fecha_inicio.toLocaleString("en-GB").split(",",1)
                 label.label="Cargo: "+trayActual.rows[i].car_cargo                
 
           .row.row-space
@@ -78,8 +78,9 @@ head
             label.title Trayectoria Laboral Exterior
               -for (var i = 0; i < trayAnterior.rowCount; ++i)
                 label.label="Empresa: "+trayAnterior.rows[i].tra_empresa
-                label.label="Fecha de Ingreso: "+trayAnterior.rows[i].tra_fecha_inicio
-                label.label="Fecha de Egreso: "+trayAnterior.rows[i].tra_fecha_fin
+                label.label="Fecha de Ingreso: "+trayAnterior.rows[i].tra_fecha_inicio.toLocaleString("en-GB").split(",",1)
+                if(trayAnterior.rows[i].tra_fecha_fin!=null)
+                  label.label="Fecha de Egreso: "+trayAnterior.rows[i].tra_fecha_fin.toLocaleString("en-GB").split(",",1)
                 label.label="Cargo: "+trayAnterior.rows[i].car_cargo
                    
 
@@ -89,7 +90,7 @@ head
               -for (var i = 0; i < capacitaciones.rowCount; ++i)
                 label.label="Curso: "+capacitaciones.rows[i].cap_curso
                 label.label="Institucion: "+capacitaciones.rows[i].ins_nombre
-                label.label="Fecha: "+capacitaciones.rows[i].cap_fecha
+                label.label="Fecha: "+capacitaciones.rows[i].cap_fecha.toLocaleString("en-GB").split(",",1)
                 label.label="Duracion: "+capacitaciones.rows[i].cap_horas+"horas"
           .row.row-space
          

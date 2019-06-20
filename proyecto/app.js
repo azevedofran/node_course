@@ -28,9 +28,16 @@ app.get("/registrar",function (req,res) {
 });
 
 app.get("/persona",function (req,res){
-  client.query("select * from PROFESION").then(profesion=>{
-    res.render("persona",{profesiones: profesion})
-  })
+  
+ client.query("select * from persona").then(rows=>{
+    client.query("select * from PROFESION").then(profesion=>{
+      res.render("persona",{profesiones: profesion,personas:rows})
+    })
+  })    
+});
+
+app.get("/actPersona",function (req,res) {
+  res.render("actPersona")
 });
 
 app.get("/capacitacion",function (req,res) {
@@ -293,7 +300,7 @@ app.post("/curriculum",function (req,res,ret) {
       })
     })
   }
-  
+
   
 });
 
@@ -301,13 +308,65 @@ app.post("/apreciaciones",function (req,res,ret) {
   if(req.body.cedula!=undefined){
     var cedula=req.body.cedula.split(" | ",1)
     client.query("select * from persona").then(cuadro=>{
-      client.query("select * from apreciacion where apr_persona='"+cedula+"'").then(apreciacion=>{  
-        client.query("select per_cedula,per_nombre,per_nombre2,per_apellido,per_apellido2 from persona where per_cedula='"+cedula+"'").then(persona=>{
+      client.query("select * from apreciacion where apr_persona='"+cedula+"' order by apr_periodo ASC").then(apreciacion=>{  
+        client.query("select per_cedula,per_nombre,per_nombre2,per_apellido,per_apellido2,per_correo,pro_profesion from persona,profesion where pro_id=per_profesion and per_cedula='"+cedula+"'" ).then(persona=>{
           res.render("apreciaciones2",{cuadros:cuadro,personas: persona,apreciaciones:apreciacion})
         })
       })
     })    
   }
+})
+
+app.post("/verPersona",function(req,res,ret){
+  if(req.body.apr_persona!=undefined){
+    var cedula=req.body.apr_persona.split(" | ",1)  
+    client.query("select * from persona,profesion,direccion,telefono where per_profesion=pro_id and per_cedula='"+cedula+"' and tel_persona='"+cedula+"'").then(seleccion=>{
+      client.query("select * from persona").then(rows=>{
+        client.query("select * from PROFESION").then(profesion=>{
+         res.render("persona2",{profesiones: profesion,personas:rows,selecciones: seleccion})
+        })
+      })
+    })
+  }  
+})
+
+app.post("/modificarPersona",function(req,res,ret){
+  console.log("Entro a modificarPersona")
+  console.log()
+  if (req.body.per_nombre2==''){
+          var nombre2=null;
+  }
+  if (req.body.per_apellido2==''){
+          var apellido2=null;
+  }
+  if (req.body.per_nombre2=='null'){
+          var nombre2=null;
+  }
+  if (req.body.per_apellido2=='null'){
+          var apellido2=null;
+  }
+  if (req.body.per_nombre2!='' && req.body.per_nombre2!='null'){
+          var nombre2=req.body.per_nombre2;
+  }
+  if (req.body.per_apellido2!='' && req.body.per_apellido2!='null'){
+          var apellido2=req.body.per_apellido2;
+  }
+
+  
+  var cedula=req.body.per_cedula
+  var fecha = req.body.per_fecha_nacimiento.split("/"); 
+  var fecha_nac = fecha[2]+'-'+fecha[1]+'-'+fecha[0];
+  console.log("entro en modificarPersona")
+   client.query("select pro_id from profesion where pro_profesion='"+req.body.pro_profesion+"'").then(per_profesion=>{
+    client.query("UPDATE persona SET per_nombre ='"+req.body.per_nombre+"' WHERE per_cedula ='"+cedula+"'")
+    client.query("UPDATE persona SET per_nombre2 ='"+nombre2+"' WHERE per_cedula ='"+cedula+"'")
+    client.query("UPDATE persona SET per_apellido ='"+req.body.per_apellido+"' WHERE per_cedula ='"+cedula+"'")
+    client.query("UPDATE persona SET per_apellido2 ='"+apellido2+"' WHERE per_cedula ='"+cedula+"'")
+   
+    //per_fecha_nacimiento=#{fecha_nac},per_edo_civil=#{req.body.per_edo_civil},per_correo=#{req.body.per_correo},per_genero=#{req.body.per_genero},per_profesion=#(per_profesion.rows[0].pro_id) WHERE per_cedula=#{cedula}")
+    
+    res.send("se modifico el usuario")
+  })
 })
 
 app.listen(8080);

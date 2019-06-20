@@ -22,7 +22,7 @@ head
   .wrapper.wrapper--w680
     .card.card-4(style='width:110%;')
       .card-body
-        h2.title Sintesis Curricular
+        h2.title Apreciacion
         form(action="/apreciaciones",method="POST")
           .row.row-space
             .col-2
@@ -34,6 +34,7 @@ head
                     -for (var i = 0; i < cuadros.rowCount; ++i)
                       option=cuadros.rows[i].per_cedula+' | '+cuadros.rows[i].per_nombre+' | '+cuadros.rows[i].per_apellido
                   .select-dropdown
+                  
             .col-1
               .p-t-15
                  button.btn.btn--radius-2.btn--blue(type='Submit') Generar
@@ -51,15 +52,16 @@ head
                   label.label="Correo: "+personas.rows[i].per_correo
                   label.label="Profesion: "+personas.rows[i].pro_profesion
                   
-          .row.row-space
-            .col-2
-            label.title Apreciacion
-              -for (var i = 0; i < apreciaciones.rowCount; ++i)
-                label.label="Periodo: "+apreciaciones.rows[i].apr_periodo
-                label.label="Solucionar Problemas: "+apreciaciones.rows[i].apr_solucion_problemas
-                label.label="Conocimiento del Negocio: "+apreciaciones.rows[i].apr_conoce_negocio
-                label.label="Habilidad Social: "+apreciaciones.rows[i].apr_habilidad_social
-                label.label="Liderazgo: "+apreciaciones.rows[i].apr_liderazgo
-                label.label="Autodesarrollo: "+apreciaciones.rows[i].apr_auto_desarrollo
-                label.label="Automotivacion: "+apreciaciones.rows[i].apr_auto_motivacion
-                label.label="Consolidado: "+apreciaciones.rows[i].apr_consolidado
+            .row.row-space
+              .col-2
+              label.title Apreciacion
+                -for (var i = 0; i < apreciaciones.rowCount; ++i)
+                  strong 
+                    label.label="Periodo: "+apreciaciones.rows[i].apr_periodo
+                  label.label="Solucionar Problemas: "+apreciaciones.rows[i].apr_solucion_problema
+                  label.label="Conocimiento del Negocio: "+apreciaciones.rows[i].apr_conoce_negocio
+                  label.label="Habilidad Social: "+apreciaciones.rows[i].apr_habilidad_social
+                  label.label="Liderazgo: "+apreciaciones.rows[i].apr_liderazgo
+                  label.label="Autodesarrollo: "+apreciaciones.rows[i].apr_auto_desarrollo
+                  label.label="Automotivacion: "+apreciaciones.rows[i].apr_auto_motivacion
+                  label.label="Consolidado: "+apreciaciones.rows[i].apr_consolidado
