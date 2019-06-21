@@ -56,7 +56,7 @@ form
           .row.row-space
             .col-2
               .input-group
-                label.label Persona
+                label(style='text-align: left').label Persona
                 .rs-select2.js-select-simple
                   select(name="cedula")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
@@ -67,7 +67,7 @@ form
 
             .col-2
               .input-group
-                label.label Tipo de Informacion
+                label(style='text-align: left').label Tipo de Informacion
                 .rs-select2.js-select-simple
                   select(name="inf_per_informacion")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
@@ -79,7 +79,7 @@ form
           
           .col-6
             .input-group
-              label.label Descripcion
+              label(style='text-align: left').label Descripcion
               input.input--style-4(type='text' name='inf_per_descripcion' )
          
           button.btn.btn--radius-2.btn--blue(type='submit') Agregar

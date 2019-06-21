@@ -69,7 +69,7 @@ form
               .col-6
                 h1.title(style='margin-top: 5%;font-size:35px !important') Informacion Personal
                 -for (var i = 0; i < cuadros.rowCount; ++i)
-                  label(style='text-align: left;margin-top: 10%;font-size:25px !important; background-color: #6589de;').label=cuadros.rows[i].per_nombre+" "+cuadros.rows[i].per_apellido
+                  label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de;').label=cuadros.rows[i].per_nombre+" "+cuadros.rows[i].per_apellido
                   label(style='text-align: left').label="C.I.: "+cuadros.rows[i].per_cedula+" Estado Civil: "+cuadros.rows[i].per_edo_civil
                   label(style='text-align: left').label="Correo: "+cuadros.rows[i].per_correo
 

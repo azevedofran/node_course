@@ -56,7 +56,7 @@ form
           .row.row-space
             .col-2
               .input-group
-                label.label Persona
+                label(style='text-align: left').label Persona
                 .rs-select2.js-select-simple
                   select(name="apr_persona")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
@@ -72,31 +72,41 @@ form
           .row.row-space
             .col-2
               .input-group
-                label.label Primer nombre
+                label(style='text-align: left').label Primer nombre
                 input.input--style-4(type='text' name='per_nombre' value='#{selecciones.rows[0].per_nombre}')
             .col-2
-              .input-group
-                label.label Segundo Nombre
-                input.input--style-4(type='text' name='per_nombre2' value='#{selecciones.rows[0].per_nombre2}')
+              if(selecciones.rows[0].per_nombre2!=null)
+                .input-group
+                  label(style='text-align: left').label Segundo Nombre
+                  input.input--style-4(type='text' name='per_nombre2' value='#{selecciones.rows[0].per_nombre2}')
+              if(selecciones.rows[0].per_nombre2==null)
+                .input-group
+                  label(style='text-align: left').label Segundo Nombre
+                  input.input--style-4(type='text' name='per_nombre2')
           .row.row-space
             .col-2
               .input-group
-                label.label Primer apellido
+                label(style='text-align: left').label Primer apellido
                 input.input--style-4(type='text' name='per_apellido' value='#{selecciones.rows[0].per_apellido}')
             .col-2
-              .input-group
-                label.label Segundo apellido
-                input.input--style-4(type='text' name='per_apellido2' value='#{selecciones.rows[0].per_apellido2}')
+              if(selecciones.rows[0].per_apellido2!=null && selecciones.rows[0].per_apellido2!='null')
+                .input-group
+                  label(style='text-align: left').label Segundo Nombre
+                  input.input--style-4(type='text' name='per_apellido2' value='#{selecciones.rows[0].per_apellido2}')
+              if(selecciones.rows[0].per_apellido2==null || selecciones.rows[0].per_apellido2=='null')
+                .input-group
+                  label(style='text-align: left').label Segundo Nombre
+                  input.input--style-4(type='text' name='per_apellido2')
           .row.row-space
             .col-2
               .input-group
-                label.label Cedula
+                label(style='text-align: left').label Cedula
                 input.input--style-4(type='text' name='per_cedula' value='#{selecciones.rows[0].per_cedula}' readonly="readonly")
             
             
             .col-2
               .input-group
-                label.label Fecha de nacimiento
+                label(style='text-align: left').label Fecha de nacimiento
                 .input-group-icon
                   input.input--style-4.js-datepicker(type='text' name='per_fecha_nacimiento' value='#{selecciones.rows[0].per_fecha_nacimiento.toLocaleString("en-GB").split(",",1)}')
                   i.zmdi.zmdi-calendar-note.input-icon.js-btn-calendar
@@ -104,11 +114,11 @@ form
           .row.row-space
             .col-3
               .input-group
-                label.label Correo
+                label(style='text-align: left').label Correo
                 input.input--style-4(type='email' name='per_correo' value='#{selecciones.rows[0].per_correo}')
             .col-2
               .input-group
-                label.label Genero
+                label(style='text-align: left').label Genero
                 .rs-select2.js-select-simple.select--no-search
                   select(name="per_genero" value='#{selecciones.rows[0].per_genero}')
                     option(disabled='disabled' selected='selected' name="per_edo_civil")=selecciones.rows[0].per_genero
@@ -119,7 +129,7 @@ form
           .row.row-space
             .col-2
               .input-group
-                label.label Estado civil
+                label(style='text-align: left').label Estado civil
                 .rs-select2.js-select-simple.select--no-search
                   select(name="per_edo_civil" value='#{selecciones.rows[0].per_edo_civil}')
                     option(disabled='disabled' selected='selected' name="per_edo_civil")=selecciones.rows[0].per_edo_civil 
@@ -131,7 +141,7 @@ form
                   .select-dropdown
             .col-2
               .input-group
-                label.label profesion
+                label(style='text-align: left').label profesion
                 .rs-select2.js-select-simple
                   select(name='per_profesion' value='#{selecciones.rows[0].pro_profesion}')
                     option(disabled='disabled' selected='selected')=selecciones.rows[0].pro_profesion
@@ -142,7 +152,7 @@ form
             .row.row-space
                 .col-1
                   .input-group
-                    label.label TELEFONO
+                    label(style='text-align: left').label TELEFONO
                     .rs-select2.js-select-simple
                       select(name='tel_tipo')
                         option(disabled='disabled' selected='selected')=selecciones.rows[i].tel_tipo
@@ -151,7 +161,7 @@ form
                       .select-dropdown
                 .col-1
                   .input-group
-                    label.label  *
+                    label(style='text-align: left').label  *
                     .rs-select2.js-select-simple.select--no-search
                       select(name='tel_cod_area')
                         option(disabled='disabled' selected='selected')=selecciones.rows[i].tel_cod_area 
@@ -164,13 +174,13 @@ form
                       .select-dropdown
                 .col-1
                   .input-group
-                    label.label *
+                    label(style='text-align: left').label *
                     input.input--style-4(type='tel_numero' name='tel_numero' placeholder="numero" value='#{selecciones.rows[i].tel_numero}')
 
           .row.row-space
             .col-4
               .input-group
-                label.label Direccion
+                label(style='text-align: left').label Direccion
                 textarea(style='width:621px; height:64px' name='per_direccion')=selecciones.rows[0].dir_direccion
           
           .row.row-space        

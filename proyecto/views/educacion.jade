@@ -55,7 +55,7 @@ form
           .row.row-space
             .col-2
               .input-group
-                label.label Persona
+                label(style='text-align: left').label Persona
                 .rs-select2.js-select-simple
                   select(name="cap_persona")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
@@ -66,7 +66,7 @@ form
 
             .col-2
               .input-group
-                label.label Universidad
+                label(style='text-align: left').label Universidad
                 .rs-select2.js-select-simple
                   select(name="cap_institucion" type="text")#sel1.form-control
                     option(disabled='disabled' selected='selected') Seleccionar
@@ -78,7 +78,7 @@ form
           .row.row-space
             .col-2
                 .input-group
-                  label.label Tipo de Carrera
+                  label(style='text-align: left').label Tipo de Carrera
                   .rs-select2.js-select-simple
                     select(name="cap_curso")
                       option(disabled='disabled' selected='selected') Seleccione 
@@ -91,19 +91,19 @@ form
                     .select-dropdown
             .col-2
               .input-group
-                label.label Carrera
+                label(style='text-align: left').label Carrera
                 input.input--style-4(type='text' name='cap_descripcion')
             
           .row.row-space
             .col-2
               .input-group
-                label.label Fecha de Inicio
+                label(style='text-align: left').label Fecha de Inicio
                 .input-group-icon
                   input.input--style-4.js-datepicker(type='text' name='cap_fecha')
                   i.zmdi.zmdi-calendar-note.input-icon.js-btn-calendar
             .col-2
               .input-group
-                label.label Fecha de Fin
+                label(style='text-align: left').label Fecha de Fin
                 .input-group-icon
                   input.input--style-4.js-datepicker(type='text' name='cap_fecha_fin')
                   i.zmdi.zmdi-calendar-note.input-icon.js-btn-calendar

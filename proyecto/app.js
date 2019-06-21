@@ -4,6 +4,8 @@ var app = express();
 // Hace llamada a la conexion de User
 var client = require("./models/user").client;
 
+
+
 app.use("/public", express.static('public'));
 app.use(bodyParser.json()); // para peticiones application/json
 app.use(bodyParser.urlencoded({extended: true}));
@@ -15,8 +17,8 @@ app.get("/",function (req,res) {
   res.render("index")
 });
 
-app.get("/indice",function (req,res) {
-  res.render("indice")
+app.get("/index",function (req,res) {
+  res.render("index")
 });
 
 app.get("/login",function (req,res) {
@@ -384,8 +386,19 @@ app.post("/modificarPersona",function(req,res,ret){
    /*if(req.body.tel_numero!='' && req.body.tel_cod_area!='' && req.body.tel_tipo!=''){
     client.query("insert into TELEFONO(tel_cod_area,tel_numero,tel_tipo,tel_persona) values($1,$2,$3,$4)",[req.body.tel_cod_area,req.body.tel_numero,req.body.tel_tipo,cedula])   
     }*/
-    client.query("UPDATE direccion SET dir_direccion ='"+req.body.per_direccion+"' WHERE dir_persona ='"+cedula+"'")
-    var mensaje="Los datos fueuron modificados exitosamente";
+      
+      client.query("select per_cedula,tel_cod_area,tel_numero,tel_tipo,tel_persona from persona,telefono where per_cedula='"+cedula+"' and tel_persona='"+cedula+"' and tel_cod_area='"+req.body.tel_cod_area+"' and tel_numero='"+req.body.tel_numero+"'").then(telefonoEx=>{
+        if(telefonoEx.rowCount<=0){
+          console.log("entro al telefono ext!!!!!!!!!!!!!!!!!!!!")
+          client.query("insert into TELEFONO(tel_cod_area,tel_numero,tel_tipo,tel_persona) values($1,$2,$3,$4)",[req.body.tel_cod_area,req.body.tel_numero,req.body.tel_tipo,req.body.per_cedula])
+        }
+      })
+      
+    client.query("select dir_id from direccion where dir_persona='"+cedula+"'").then(direccion=>{
+      client.query("UPDATE direccion SET dir_direccion ='"+req.body.per_direccion+"' WHERE dir_id ='"+direccion.rows[0].dir_id+"'") 
+    })
+    
+    var mensaje="Los datos fueron modificados exitosamente";
     res.render('index',{mensajes:mensaje});
 
   })
