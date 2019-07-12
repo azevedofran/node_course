@@ -26,10 +26,10 @@ form
   nav.navbar.navbar-inverse(style='margin-bottom: 0px')
     .container-fluid
       .navbar-header
-        a.navbar-brand(href='/') CEPSA
+        a.navbar-brand(href='/index') CEPSA
       ul.nav.navbar-nav
         li
-          a(href="/") Home
+          a(href="/index") Home
         li  
           a(href="/persona") Persona
         li
@@ -73,22 +73,24 @@ form
                   .modal-footer
                     a.btn.btn-danger(href='#' data-dismiss='modal') Cerrar
             
-          .row.row-space
-              .input-group
-                label.label Usuario
-                center: input.input--style-4(type='text' name='usuario' )
-            .col-2
-              .input-group
-                label.label contrasena
-                input.input--style-4(type='password' name='password')
-          .row.row-space
-            .col-2
-              .input-group
-                label.label confirmar contrasena
-                input.input--style-4(type='password' name='password_confirmation')
+        .row.row-space
+          .col-2
+            .input-group
+              label(style='text-align: left').label Usuario
+              center: input.input--style-4(type='text' name='usuario' )
+        .row.row-space
+          .col-2
+            .input-group
+              label(style='text-align: left').label contrasena
+              input.input--style-4(type='password' name='password')
+        .row.row-space
+          .col-2
+            .input-group
+              label(style='text-align: left').label confirmar contrasena
+              input.input--style-4(type='password' name='password_confirmation')
           
-          .p-t-15
-            button.btn.btn--radius-2.btn--blue(type='submit' value="Registrar") Registrar
+        .p-t-15
+          center: button.btn.btn--radius-2.btn--blue(type='submit' value="Registrar") Registrar
 // Jquery JS
 script(src='../public/vendor2/jquery/jquery.min.js')
 // Vendor JS

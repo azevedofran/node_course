@@ -4,17 +4,25 @@ var app = express();
 // Hace llamada a la conexion de User
 var client = require("./models/user").client;
 
-
+var session= require("express-session");
+var router_app = require("./routes_app");
+var session_middleware = require("./middlewares/session");
 
 app.use("/public", express.static('public'));
 app.use(bodyParser.json()); // para peticiones application/json
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(session({
+  secret: "13jk3hkhakdh123",
+  resave: false,
+  saveUninitialized: false
+}));
 
 app.set("view engine", "jade");
 
 app.get("/",function (req,res) {
-  res.render("index")
+  console.log(req.session.user_id);
+  res.render("login")
 });
 
 app.get("/index",function (req,res) {
@@ -130,6 +138,7 @@ app.post("/usersLogin", function(req,res,ret){
   req.body.usuario+"'").then(rows=>{
       var consulta = rows.rows[0].usu_contrasena;
       if (consulta == req.body.password){
+        req.session.user_id=req.body.usuario;
         res.render('index');
       }else if (consulta!=req.body.password){
         var mensaje="El usuario o el password es incorrecto"
@@ -403,5 +412,10 @@ app.post("/modificarPersona",function(req,res,ret){
 
   })
 })
+
+app.use("/app",session_middleware);
+app.use("/app",router_app);
+
+
 
 app.listen(8080);

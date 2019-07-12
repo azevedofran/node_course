@@ -26,10 +26,10 @@ form
   nav.navbar.navbar-inverse(style='margin-bottom: 0px')
     .container-fluid
       .navbar-header
-        a.navbar-brand(href='/') CEPSA
+        a.navbar-brand(href='/index') CEPSA
       ul.nav.navbar-nav
         li
-          a(href="/") Home
+          a(href="/index") Home
         li  
           a(href="/persona") Persona
         li
@@ -70,7 +70,7 @@ form
                 -for (var i = 0; i < cuadros.rowCount; ++i)
                   label.title(style="color: white") .
                   strong
-                    label(style='text-align: left;margin-top: 10%;font-size:25px !important; background-color: #6589de;').label=cuadros.rows[i].per_nombre+" "+cuadros.rows[i].per_apellido
+                    label(style='text-align: center;margin-top: 10%;font-size:25px !important; background-color: #6589de;').label=cuadros.rows[i].per_nombre+" "+cuadros.rows[i].per_apellido
                   label.label="C.I.: "+cuadros.rows[i].per_cedula+" Estado Civil: "+cuadros.rows[i].per_edo_civil
                   label.label="Correo: "+cuadros.rows[i].per_correo
 

@@ -26,10 +26,10 @@ form
   nav.navbar.navbar-inverse(style='margin-bottom: 0px')
     .container-fluid
       .navbar-header
-        a.navbar-brand(href='/') CEPSA
+        a.navbar-brand(href='/index') CEPSA
       ul.nav.navbar-nav
         li
-          a(href="/") Home
+          a(href="/index") Home
         li  
           a(href="/persona") Persona
         li
@@ -123,11 +123,7 @@ form
             -for (var i = 0; i < informaciones.rowCount; ++i)
               label(style='text-align: left; margin-left:5%').label="Tipo: "+informaciones.rows[i].inf_tipo
               label(style='text-align: left; margin-left:5%').label="Informacion: "+informaciones.rows[i].inf_per_descripcion
-          .row.row-space  
-              .text-center.p-t-136
-                a.txt2(href='/')
-                  |Volver al Dashboard
-                  i.fa.fa-long-arrow-right.m-l-5(aria-hidden='true') 
+ 
              
 // Jquery JS
 script(src='../public/vendor2/jquery/jquery.min.js')
